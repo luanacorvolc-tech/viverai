@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+/* Sfondi */
+.bg-oliva { background-color: #3d4a22; }
+.bg-oliva-med { background-color: #5c6b3a; }
+.bg-oliva-light { background-color: #8a9e6e; }
+.bg-salvia { background-color: #b8caa0; }
+.bg-terra { background-color: #b85c38; }
+.bg-terra-light { background-color: #d4845e; }
+.bg-beige { background-color: #f0ebe0; }
+.bg-cream { background-color: #faf8f4; }
+.bg-ink { background-color: #2c2a24; }
+
+/* Sfondi semitrasparenti */
+.bg-oliva-10 { background-color: rgba(61, 74, 34, 0.10); }
+.bg-oliva-97 { background-color: rgba(250, 248, 244, 0.97); }
+.bg-terra-10 { background-color: rgba(184, 92, 56, 0.10); }
+
+/* Testi */
+.text-oliva { color: #3d4a22; }
+.text-oliva-med { color: #5c6b3a; }
+.text-terra { color: #b85c38; }
+.text-terra-light { color: #d4845e; }
+.text-cream { color: #faf8f4; }
+.text-ink { color: #2c2a24; }
+.text-ink-med { color: #6b6558; }
+.text-ink-light { color: #9a9488; }
+
+/* Bordi */
+.border-oliva { border-color: #3d4a22; }
+.border-oliva-15 { border-color: rgba(61, 74, 34, 0.15); }
+.border-oliva-25 { border-color: rgba(61, 74, 34, 0.25); }
+
+/* Hover */
+.hover\:bg-oliva:hover { background-color: #3d4a22; }
+.hover\:bg-oliva-10:hover { background-color: rgba(61, 74, 34, 0.10); }
+.hover\:bg-cream:hover { background-color: #faf8f4; }
+.hover\:bg-terra:hover { background-color: #b85c38; }
+.hover\:bg-terra-light:hover { background-color: #d4845e; }
+.hover\:text-oliva:hover { color: #3d4a22; }
+.hover\:text-terra:hover { color: #b85c38; }
+.hover\:text-white:hover { color: #ffffff; }
+.hover\:border-oliva:hover { border-color: #3d4a22; }
+
+body {
+  font-family: 'Jost', system-ui, sans-serif;
+  background-color: #faf8f4;
+  color: #2c2a24;
+  padding-top: 96px;
+}
+
+h1, h2, h3, h4, h5, h6, .font-serif {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
