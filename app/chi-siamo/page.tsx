@@ -26,6 +26,7 @@ export default function ChiSiamoPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a1830]/40 via-[#0a1830]/30 to-[#0a1830]/70" />
 
         <div className="relative z-10 text-center px-6 max-w-4xl motion-safe:animate-[fadeUp_1.6s_ease-out_0.3s_both]">
+          <p className="text-[11px] tracking-[0.4em] uppercase text-[#e8d5a3] mb-6 font-light">
             Il manifesto
           </p>
           <h1 className="font-serif text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1] mb-6">
