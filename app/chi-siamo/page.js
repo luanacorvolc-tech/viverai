@@ -1,8 +1,4 @@
-import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
-
-export const metadata: Metadata = {
+export const metadata = {
   title: "Chi siamo — ViverAI",
   description:
     "Il manifesto di ViverAI. Una piattaforma educativa del verde nata per onorare mio fratello BLOB, dove i saperi della terra incontrano l'intelligenza artificiale.",
