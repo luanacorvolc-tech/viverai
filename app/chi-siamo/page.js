@@ -1,3 +1,6 @@
+import Image from "next/image";
+import Link from "next/link";
+
 export const metadata = {
   title: "Chi siamo — ViverAI",
   description:
@@ -18,7 +21,6 @@ export default function ChiSiamoPage() {
           className="object-cover scale-105 motion-safe:animate-[slowZoom_30s_ease-in-out_infinite_alternate]"
           sizes="100vw"
         />
-        {/* velo scuro per leggibilità testo */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a1830]/40 via-[#0a1830]/30 to-[#0a1830]/70" />
 
         <div className="relative z-10 text-center px-6 max-w-4xl motion-safe:animate-[fadeUp_1.6s_ease-out_0.3s_both]">
@@ -77,7 +79,7 @@ export default function ChiSiamoPage() {
         </div>
       </section>
 
-      {/* ============ SEZIONE 2 — DEDICA A BLOB (immersiva, cielo notturno) ============ */}
+      {/* ============ SEZIONE 2 — DEDICA A BLOB ============ */}
       <section className="relative w-full min-h-[95vh] flex items-center overflow-hidden">
         <Image
           src="/images/stella-blob.png"
@@ -90,7 +92,6 @@ export default function ChiSiamoPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-[#050d1c]/30 via-[#050d1c]/50 to-[#050d1c]/80" />
 
         <div className="relative z-10 w-full max-w-2xl mx-auto px-6 py-24 text-center text-[#f0ebe0]">
-          {/* stella che pulsa */}
           <div className="flex justify-center mb-10">
             <div className="relative">
               <div className="text-3xl text-[#a8c4e8] motion-safe:animate-[twinkle_3s_ease-in-out_infinite]">
@@ -143,10 +144,9 @@ export default function ChiSiamoPage() {
         </div>
       </section>
 
-      {/* ============ SEZIONE 3 — COSA CREDIAMO (con foto mano+fiori) ============ */}
+      {/* ============ SEZIONE 3 — COSA CREDIAMO ============ */}
       <section className="relative py-24 sm:py-32 px-6 bg-[#faf7f1]">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Immagine */}
           <div className="relative aspect-[4/5] w-full overflow-hidden rounded-sm shadow-2xl">
             <Image
               src="/images/mano-fiori.png"
@@ -158,7 +158,6 @@ export default function ChiSiamoPage() {
             />
           </div>
 
-          {/* Testo */}
           <div>
             <p className="text-[10px] tracking-[0.4em] uppercase text-[#7a8a6a] mb-6 font-medium">
               La nostra visione
@@ -301,7 +300,6 @@ export default function ChiSiamoPage() {
         </div>
       </section>
 
-      {/* ============ Animazioni CSS ============ */}
       <style>{`
         @keyframes fadeUp {
           from { opacity: 0; transform: translateY(30px); }
