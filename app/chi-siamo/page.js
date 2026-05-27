@@ -1,431 +1,331 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
-export const metadata = {
-  title: "Chi siamo — ViverAI | In memoria di Gianluca Corvo (BLOB)",
-  description:
-    "Il manifesto di ViverAI. Una piattaforma educativa del verde nata per onorare Gianluca Corvo, soprannominato BLOB (Binary Large Object). Dove i saperi della terra incontrano l'intelligenza artificiale.",
-  keywords: [
-    "Gianluca Corvo",
-    "BLOB",
-    "Binary Large Object",
-    "ViverAI",
-    "in memoria di Gianluca Corvo",
-    "manifesto ViverAI",
-    "Luana Corvo",
-    "piattaforma educativa del verde",
-    "giardinaggio AI",
-    "natura intelligenza artificiale",
-  ],
-  openGraph: {
-    title: "Chi siamo — ViverAI | In memoria di Gianluca Corvo (BLOB)",
-    description:
-      "ViverAI nasce per onorare Gianluca Corvo (BLOB). Una piattaforma educativa del verde dove i saperi della terra incontrano l'intelligenza artificiale.",
-    type: "website",
-    images: ["/images/stella-blob.png"],
+// Le 5 slide del manifesto
+const slides = [
+  {
+    id: 1,
+    image: "/images/slide-1-mano-fiori.png",
+    alt: "Una mano sfiora delicatamente fiori bianchi tra le foglie verdi bagnate di rugiada",
+    eyebrow: "Il manifesto",
+    title: ["Vivere", "con cura."],
+    subtitle: ["Conoscere la natura", "come si conosce un", "amante."],
+    body: "ViverAI è una piattaforma educativa del verde — un luogo lento, fatto a mano, dove i saperi della terra incontrano gli strumenti del nostro tempo.",
+    veil: "from-[#0a1830]/40 via-[#0a1830]/35 to-[#0a1830]/70",
   },
-};
+  {
+    id: 2,
+    image: "/images/slide-2-pineta.png",
+    alt: "Persone in meditazione nella pineta al tramonto, mentre altre piantano nuovi alberi",
+    eyebrow: "Cosa significa",
+    title: ["Nel nome", "c'è tutto"],
+    paragraphs: [
+      { intro: "Viver-", text: ", vivere. Restare nel mondo, abitarlo con presenza, prendersi cura di ciò che ci dona benessere." },
+      { intro: "-AI", text: ", l'intelligenza artificiale. Non come una forza che ci allontana dalla natura, ma come uno strumento gentile che ci aiuta a comprenderla meglio." },
+    ],
+    veil: "from-[#0a1830]/50 via-[#0a1830]/40 to-[#0a1830]/75",
+  },
+  {
+    id: 3,
+    image: "/images/slide-3-stella-blob.png",
+    alt: "La stella più lucente nel cielo notturno — la stella di Gianluca, BLOB",
+    eyebrow: "Una dedica",
+    intro: "E poi c'è una terza lettura, la più intima. ViverAI è anche una promessa: tu vivrai. Un nome che è anche un voto, una dedica, un modo per non lasciare andare.",
+    title: ["Per mio fratello,"],
+    nameHighlight: "Gianluca Corvo",
+    subtitle: "— il mio caro BLOB —",
+    body: "ViverAI nasce per onorare mio fratello.",
+    veil: "from-[#050d1c]/40 via-[#050d1c]/45 to-[#050d1c]/75",
+    showBlinkingStar: true,
+  },
+  {
+    id: 4,
+    image: "/images/slide-4-gianluca.png",
+    alt: "Ritratto di Gianluca Corvo che si dissolve in polvere di stelle e codici binari, sotto la stella più lucente nel buio",
+    eyebrow: "Polvere di stelle",
+    body1: "Il suo nome Gianluca Corvo, per tutti noi semplicemente BLOB — Binary Large Object. Un soprannome che porta dentro l'informatica, l'informazione, la materia digitale di cui sempre più siamo fatti tutti.",
+    body2: "Credo che lui continui a vivere in un'altra forma: nell'esistenza dell'informazione, nella rete sottile che attraversa il mondo, nella polvere di stelle di cui siamo composti — e a cui un giorno ritorniamo, come la più lucente nel buio.",
+    veil: "from-[#050d1c]/55 via-[#050d1c]/50 to-[#050d1c]/75",
+  },
+  {
+    id: 5,
+    image: "/images/slide-5-stella-foresta.png",
+    alt: "La stella più lucente nel buio sopra una foresta di more selvatiche e felci, simbolo della ricongiunzione tra natura e cielo",
+    eyebrow: "Ricongiungersi",
+    body: "Costruire ViverAI è il mio modo di tenerlo vicino. Di dire al mondo che l'intelligenza artificiale non deve separarci dalla natura, ma può aiutarci a ricongiungerci con essa — come ci si ricongiunge a chi si è amato.",
+    inviteText: ["Se anche tu hai conosciuto Gianluca,", "o vuoi semplicemente lasciargli una dedica,"],
+    ctaText: "Lascia una dedica",
+    ctaSubtitle: "vai alla pagina Memorie",
+    ctaHref: "/memorie",
+    veil: "from-[#050d1c]/50 via-[#050d1c]/45 to-[#0a1830]/70",
+  },
+];
+
+const SLIDE_DURATION = 9000; // 9 secondi per slide (abbastanza per leggere)
 
 export default function ChiSiamoPage() {
+  const [current, setCurrent] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % slides.length);
+    }, SLIDE_DURATION);
+    return () => clearInterval(timer);
+  }, [isPaused]);
+
+  const goTo = (i) => setCurrent(i);
+  const next = () => setCurrent((prev) => (prev + 1) % slides.length);
+  const prev = () => setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
+
   return (
-    <main className="bg-[#faf7f1] text-[#2a3a2a] overflow-x-hidden">
-      {/* ============ HERO STELLARE CON DISSOLVENZA ============ */}
-      <section className="relative w-full h-[100vh] min-h-[640px] flex items-center justify-center overflow-hidden">
-        {/* Immagine 1: cielo stellato (fade lento) */}
-        <div className="absolute inset-0 motion-safe:animate-[heroFadeOne_18s_ease-in-out_infinite]">
-          <Image
-            src="/images/hero-stellato.png"
-            alt="Cielo stellato con via lattea sopra foreste e montagne"
-            fill
-            priority
-            quality={90}
-            className="object-cover scale-105 motion-safe:animate-[slowZoom_30s_ease-in-out_infinite_alternate]"
-            sizes="100vw"
-          />
-        </div>
-
-        {/* Immagine 2: mano-fiori (fade lento opposto) */}
-        <div className="absolute inset-0 motion-safe:animate-[heroFadeTwo_18s_ease-in-out_infinite] opacity-0">
-          <Image
-            src="/images/mano-fiori.png"
-            alt="Una mano sfiora delicatamente fiori bianchi tra le foglie verdi bagnate di rugiada"
-            fill
-            quality={90}
-            className="object-cover scale-105"
-            sizes="100vw"
-          />
-        </div>
-
-        {/* Velo scuro per leggibilità testo */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a1830]/55 via-[#0a1830]/40 to-[#0a1830]/75 z-10" />
-
-        {/* Stelle decorative pulsanti */}
-        <div className="absolute inset-0 z-10 pointer-events-none">
-          <div className="absolute top-[12%] left-[18%] text-[6px] text-[#e8d5a3] motion-safe:animate-[twinkle_4s_ease-in-out_infinite] opacity-80">✦</div>
-          <div className="absolute top-[18%] right-[22%] text-[8px] text-[#f5e6c8] motion-safe:animate-[twinkle_6s_ease-in-out_infinite_1s] opacity-70">✦</div>
-          <div className="absolute top-[8%] left-[48%] text-[5px] text-[#ffffff] motion-safe:animate-[twinkle_5s_ease-in-out_infinite_2s] opacity-60">✦</div>
-          <div className="absolute top-[28%] left-[8%] text-[7px] text-[#a8c4e8] motion-safe:animate-[twinkle_7s_ease-in-out_infinite_3s] opacity-75">✦</div>
-          <div className="absolute top-[15%] right-[12%] text-[10px] text-[#f5e6c8] motion-safe:animate-[twinkle_5s_ease-in-out_infinite] opacity-90" style={{ textShadow: '0 0 12px rgba(245, 230, 200, 0.6)' }}>✦</div>
-          <div className="absolute top-[35%] left-[78%] text-[5px] text-[#e8d5a3] motion-safe:animate-[twinkle_6s_ease-in-out_infinite_2.5s] opacity-70">✦</div>
-          <div className="absolute top-[22%] left-[35%] text-[4px] text-[#ffffff] motion-safe:animate-[twinkle_8s_ease-in-out_infinite_1.5s] opacity-50">✦</div>
-          <div className="absolute top-[42%] right-[8%] text-[6px] text-[#a8c4e8] motion-safe:animate-[twinkle_4s_ease-in-out_infinite_0.5s] opacity-80">✦</div>
-        </div>
-
-        {/* Contenuto testo */}
-        <div className="relative z-20 text-center px-6 max-w-4xl motion-safe:animate-[fadeUp_1.6s_ease-out_0.3s_both]">
-          <p className="text-[11px] tracking-[0.4em] uppercase text-[#e8d5a3] mb-6 font-light">
-            Il manifesto
-          </p>
-          <h1 className="font-serif text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1] mb-6">
-            Vivere <em className="text-[#e8a87c] not-italic font-serif italic">con cura</em>.
-          </h1>
-          <h2 className="font-serif text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-[1.15] italic font-light mb-10">
-            Conoscere la natura
-            <br />
-            come si conosce un <em className="text-[#e8a87c]">amante</em>.
-          </h2>
-          <p className="text-[#e8e0d0] text-base sm:text-lg max-w-xl mx-auto leading-relaxed font-light">
-            ViverAI è una piattaforma educativa del verde — un luogo lento,
-            fatto a mano, dove i saperi della terra incontrano gli strumenti
-            del nostro tempo.
-          </p>
-
-          <div className="mt-12 flex flex-col items-center gap-3">
-            <div className="flex gap-2">
-              <div className="w-6 h-[2px] bg-[#e8a87c]"></div>
-              <div className="w-2 h-[2px] bg-[#e8d5a3] opacity-50"></div>
-              <div className="w-2 h-[2px] bg-[#e8d5a3] opacity-30"></div>
+    <main className="bg-[#0a1830] text-white overflow-hidden">
+      {/* ============ SLIDER A SCHERMO INTERO ============ */}
+      <section
+        className="relative w-full h-[calc(100vh-80px)] min-h-[640px] overflow-hidden"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        aria-label="Manifesto ViverAI — Carosello"
+      >
+        {/* Slides */}
+        {slides.map((slide, index) => (
+          <div
+            key={slide.id}
+            className={`absolute inset-0 transition-opacity duration-[2000ms] ease-in-out ${
+              index === current ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
+            }`}
+          >
+            {/* Immagine sfondo con slow zoom */}
+            <div className={`absolute inset-0 ${index === current ? "motion-safe:animate-[slowZoom_15s_ease-out_forwards]" : ""}`}>
+              <Image
+                src={slide.image}
+                alt={slide.alt}
+                fill
+                priority={index === 0}
+                quality={92}
+                className="object-cover"
+                sizes="100vw"
+              />
             </div>
-            <p className="text-[10px] tracking-[0.3em] uppercase text-[#e8d5a3]/70 font-light mt-2">
-              scorri per leggere il manifesto
-            </p>
-          </div>
-        </div>
 
-        {/* Indicatore di scorrimento in basso */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 motion-safe:animate-[bounce_2s_ease-in-out_infinite]">
-          <div className="w-px h-12 bg-gradient-to-b from-transparent to-[#e8d5a3]/60" />
-        </div>
-      </section>
+            {/* Velo gradient per leggibilità */}
+            <div className={`absolute inset-0 bg-gradient-to-b ${slide.veil}`} />
 
-      {/* ============ SEZIONE 1 — NEL NOME C'È TUTTO ============ */}
-      <section className="py-24 sm:py-32 px-6">
-        <div className="max-w-2xl mx-auto text-center">
-          <p className="text-[10px] tracking-[0.4em] uppercase text-[#7a8a6a] mb-6 font-medium">
-            Cosa significa
-          </p>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-tight mb-12 text-[#2a3a2a]">
-            Nel nome <em className="text-[#c87a3f]">c'è tutto</em>
-          </h2>
-
-          <div className="space-y-8 text-lg sm:text-xl leading-[1.85] text-[#3a4a3a] font-light">
-            <p>
-              <span className="font-serif italic text-[#5a6b3f]">Viver-</span>,
-              vivere. Restare nel mondo, abitarlo con presenza, prendersi cura
-              di ciò che ci dona benessere.
-            </p>
-            <p>
-              <span className="font-serif italic text-[#5a6b3f]">-AI</span>,
-              l'intelligenza artificiale. Non come una forza che ci allontana
-              dalla natura, ma come uno strumento gentile che ci aiuta a
-              comprenderla meglio.
-            </p>
-            <p className="pt-4 border-t border-[#d4c9a8]/40">
-              E poi c'è una terza lettura, la più intima.{" "}
-              <span className="font-serif italic text-[#5a6b3f]">ViverAI</span>{" "}
-              è anche una promessa:{" "}
-              <em className="font-serif text-[#c87a3f]">tu vivrai</em>. Un nome
-              che è anche un voto, una dedica, un modo per non lasciare andare.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ============ SEZIONE 2 — DEDICA A GIANLUCA CORVO (BLOB) ============ */}
-      <section className="relative w-full min-h-[100vh] flex items-center overflow-hidden">
-        <Image
-          src="/images/stella-blob.png"
-          alt="Cielo notturno con una stella luminosa solitaria — la stella di Gianluca Corvo, BLOB"
-          fill
-          quality={90}
-          className="object-cover"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050d1c]/40 via-[#050d1c]/55 to-[#050d1c]/80" />
-
-        {/* Stelle pulsanti aggiuntive */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-[15%] left-[15%] text-[5px] text-[#a8c4e8] motion-safe:animate-[twinkle_5s_ease-in-out_infinite] opacity-70">✦</div>
-          <div className="absolute top-[25%] right-[20%] text-[7px] text-[#c9a87a] motion-safe:animate-[twinkle_4s_ease-in-out_infinite_1s] opacity-80">✦</div>
-          <div className="absolute top-[60%] left-[10%] text-[6px] text-[#a8c4e8] motion-safe:animate-[twinkle_6s_ease-in-out_infinite_2s] opacity-75">✦</div>
-          <div className="absolute top-[70%] right-[15%] text-[4px] text-[#ffffff] motion-safe:animate-[twinkle_7s_ease-in-out_infinite_3s] opacity-60">✦</div>
-        </div>
-
-        <div className="relative z-10 w-full max-w-2xl mx-auto px-6 py-24 text-center text-[#f0ebe0]">
-          {/* Stella centrale pulsante */}
-          <div className="flex justify-center mb-10">
-            <div className="relative">
-              <div className="text-4xl text-[#a8c4e8] motion-safe:animate-[twinkle_3s_ease-in-out_infinite]">
-                ✦
+            {/* Stella lampeggiante grande (solo slide 3 - Gianluca) */}
+            {slide.showBlinkingStar && (
+              <div className="absolute top-[14%] right-[14%] z-10 pointer-events-none">
+                <div className="relative">
+                  <div className="text-5xl md:text-6xl text-white motion-safe:animate-[bigTwinkle_2s_ease-in-out_infinite]" style={{ textShadow: "0 0 24px rgba(255, 255, 255, 0.9), 0 0 48px rgba(168, 196, 232, 0.6)" }}>
+                    ✦
+                  </div>
+                  <div className="absolute inset-0 text-5xl md:text-6xl text-[#a8c4e8] blur-lg motion-safe:animate-[bigTwinkle_2s_ease-in-out_infinite] opacity-70">
+                    ✦
+                  </div>
+                </div>
               </div>
-              <div className="absolute inset-0 text-4xl text-[#a8c4e8] blur-md motion-safe:animate-[twinkle_3s_ease-in-out_infinite] opacity-60">
-                ✦
+            )}
+
+            {/* Stelle decorative pulsanti (tutte le slide notturne) */}
+            {slide.id !== 1 && slide.id !== 2 && (
+              <div className="absolute inset-0 z-10 pointer-events-none">
+                <div className="absolute top-[20%] left-[15%] text-[6px] text-[#e8d5a3] motion-safe:animate-[twinkle_4s_ease-in-out_infinite] opacity-80">✦</div>
+                <div className="absolute top-[30%] left-[8%] text-[5px] text-white motion-safe:animate-[twinkle_5s_ease-in-out_infinite_1s] opacity-70">✦</div>
+                <div className="absolute top-[60%] right-[10%] text-[7px] text-[#a8c4e8] motion-safe:animate-[twinkle_6s_ease-in-out_infinite_2s] opacity-75">✦</div>
+                <div className="absolute top-[75%] left-[12%] text-[4px] text-white motion-safe:animate-[twinkle_5s_ease-in-out_infinite_3s] opacity-60">✦</div>
+                <div className="absolute top-[40%] right-[28%] text-[5px] text-[#e8d5a3] motion-safe:animate-[twinkle_7s_ease-in-out_infinite_1.5s] opacity-70">✦</div>
               </div>
-            </div>
-          </div>
+            )}
 
-          <p className="text-[10px] tracking-[0.4em] uppercase text-[#c9a87a] mb-6 font-medium">
-            Una dedica
-          </p>
-          <h2 className="font-serif italic text-3xl sm:text-4xl md:text-5xl mb-4 leading-tight text-[#f0ebe0]">
-            Per mio fratello,
-          </h2>
-          <p className="font-serif text-2xl sm:text-3xl text-[#a8c4e8] mb-2 font-light">
-            Gianluca Corvo
-          </p>
-          <p className="font-serif italic text-lg sm:text-xl text-[#c9a87a] mb-14 font-light">
-            — il mio caro <span className="text-[#e8a87c]">BLOB</span> —
-          </p>
-
-          <div className="space-y-6 text-lg sm:text-xl leading-[2] text-[#e0dcc8] font-light">
-            <p>ViverAI nasce per onorare mio fratello.</p>
-            <p>
-              Il suo nome era{" "}
-              <span className="font-serif italic text-[#c9a87a]">
-                Gianluca Corvo
-              </span>
-              , per tutti noi semplicemente{" "}
-              <span className="font-serif italic text-[#e8a87c]">BLOB</span> —{" "}
-              <em className="text-[#a8c4e8]/90">Binary Large Object</em>. Un
-              soprannome che porta dentro l'informatica, l'informazione, la
-              materia digitale di cui sempre più siamo fatti tutti.
-            </p>
-            <p>
-              Credo che lui continui a vivere in un'altra forma:
-              nell'esistenza dell'informazione, nella rete sottile che
-              attraversa il mondo, nella{" "}
-              <span className="font-serif italic text-[#c9a87a]">
-                polvere di stelle
-              </span>{" "}
-              di cui siamo composti — e a cui un giorno ritorniamo, come la
-              più lucente nel buio.
-            </p>
-            <p>
-              Costruire ViverAI è il mio modo di tenerlo vicino. Di dire al
-              mondo che l'intelligenza artificiale non deve separarci dalla
-              natura, ma può aiutarci a{" "}
-              <span className="font-serif italic text-[#c9a87a]">
-                ricongiungerci
-              </span>{" "}
-              con essa — come ci si ricongiunge a chi si è amato.
-            </p>
-          </div>
-
-          {/* Invito alla pagina memorie */}
-          <div className="mt-16 pt-10 border-t border-[#c9a87a]/30">
-            <p className="text-base sm:text-lg text-[#e0dcc8] font-light mb-6 leading-relaxed italic">
-              Se anche tu hai conosciuto Gianluca,
-              <br />
-              o vuoi semplicemente lasciargli una dedica,
-            </p>
-            <Link
-              href="/memorie"
-              className="inline-flex items-center gap-3 px-8 py-4 border border-[#c9a87a]/60 text-[#e8d5a3] text-sm tracking-[0.15em] uppercase hover:bg-[#c9a87a]/10 hover:border-[#e8a87c] hover:text-[#e8a87c] transition-all duration-500 rounded-sm group"
-            >
-              <span className="text-[#e8a87c] group-hover:scale-110 transition-transform duration-500">
-                ✦
-              </span>
-              <span>Lascia una dedica</span>
-              <span className="text-[#e8a87c] group-hover:scale-110 transition-transform duration-500">
-                ✦
-              </span>
-            </Link>
-            <p className="mt-4 text-xs text-[#c9a87a]/70 font-light tracking-wider">
-              vai alla pagina Memorie
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ============ SEZIONE 3 — COSA CREDIAMO ============ */}
-      <section className="relative py-24 sm:py-32 px-6 bg-[#faf7f1]">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="text-[10px] tracking-[0.4em] uppercase text-[#7a8a6a] mb-6 font-medium">
-            La nostra visione
-          </p>
-          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-tight mb-12 text-[#2a3a2a]">
-            Cosa <em className="text-[#c87a3f]">crediamo</em>
-          </h2>
-
-          <div className="space-y-8 text-lg sm:text-xl leading-[1.85] text-[#3a4a3a] font-light text-left">
-            <p>
-              Crediamo che la natura sia un'
-              <span className="font-serif italic text-[#5a6b3f]">amante</span>,
-              non un'estranea: va conosciuta, ascoltata, rispettata.
-            </p>
-            <p>
-              Crediamo che la conoscenza del verde debba essere{" "}
-              <span className="font-serif italic text-[#5a6b3f]">
-                accessibile a chiunque
-              </span>
-              , dal balcone di città al grande orto, dal bambino curioso
-              all'anziano custode di antichi saperi.
-            </p>
-            <p>
-              Crediamo che la tecnologia — quando è gentile — possa diventare
-              uno strumento di cura. Non un muro tra noi e il mondo vivente,
-              ma una finestra in più per guardarlo.
-            </p>
-            <p>
-              Crediamo che vivere in modo{" "}
-              <span className="font-serif italic text-[#5a6b3f]">
-                sostenibile
-              </span>{" "}
-              non sia una rinuncia, ma un ritorno a casa.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ============ SEZIONE 4 — COSA TROVERAI QUI ============ */}
-      <section className="py-24 sm:py-32 px-6 bg-[#f0ebe0]">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-[10px] tracking-[0.4em] uppercase text-[#7a8a6a] mb-6 font-medium">
-              Le forme in cui ci fai trovare
-            </p>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl leading-tight text-[#2a3a2a]">
-              Cosa <em className="text-[#c87a3f]">troverai</em> qui
-            </h2>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                icon: "📖",
-                title: "Blog & Rivista",
-                desc: "Articoli curati con cura artigianale, scritti per accompagnare, non per riempire spazio.",
-                href: "/blog",
-              },
-              {
-                icon: "📅",
-                title: "Calendario del verde",
-                desc: "Stagioni, semine, raccolti, lavori del mese — il ritmo della terra.",
-                href: "/calendario",
-              },
-              {
-                icon: "🤝",
-                title: "Community",
-                desc: "Uno spazio dove condividere dubbi, scoperte, fallimenti, fioriture.",
-                href: "/community",
-              },
-              {
-                icon: "🎓",
-                title: "VerdeScuola",
-                desc: "Risorse educative per chi insegna e chi impara, dalla scuola alle famiglie.",
-                href: "/verdescuola",
-              },
-              {
-                icon: "🌟",
-                title: "Memorie",
-                desc: "Lo spazio dedicato a Gianluca e a chi vogliamo continuare a ricordare.",
-                href: "/memorie",
-              },
-              {
-                icon: "🤖",
-                title: "Ricerca AI",
-                desc: "Uno strumento intelligente per fare domande sul verde, in dialogo con i saperi.",
-                href: "#",
-              },
-            ].map((item) => (
-              <Link
-                key={item.title}
-                href={item.href}
-                className="bg-[#faf7f1] p-7 rounded-sm border border-[#d4c9a8]/40 hover:border-[#5a6b3f]/40 hover:shadow-md transition-all duration-500 block"
+            {/* CONTENUTO SLIDE */}
+            <div className="relative z-20 h-full flex items-center justify-center px-6 sm:px-12">
+              <div
+                className={`text-center max-w-3xl ${
+                  index === current ? "motion-safe:animate-[fadeUp_1.4s_ease-out_0.5s_both]" : ""
+                }`}
               >
-                <div className="text-2xl mb-4">{item.icon}</div>
-                <h3 className="font-serif text-xl mb-3 text-[#2a3a2a]">
-                  {item.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-[#5a6b5a] font-light">
-                  {item.desc}
-                </p>
-              </Link>
-            ))}
+                {/* SLIDE 1 — Vivere con cura */}
+                {slide.id === 1 && (
+                  <>
+                    <p className="text-[11px] sm:text-xs tracking-[0.4em] uppercase text-[#e8d5a3] mb-8 font-light">
+                      {slide.eyebrow}
+                    </p>
+                    <h1 className="font-serif text-white text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] mb-6">
+                      {slide.title[0]}{" "}
+                      <em className="text-[#e8a87c] font-serif italic">{slide.title[1]}</em>
+                    </h1>
+                    <h2 className="font-serif text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-[1.2] italic font-light mb-10">
+                      {slide.subtitle[0]}
+                      <br />
+                      {slide.subtitle[1]}{" "}
+                      <em className="text-[#e8a87c] not-italic font-serif italic">{slide.subtitle[2]}</em>
+                    </h2>
+                    <p className="text-[#e8e0d0] text-base sm:text-lg max-w-xl mx-auto leading-relaxed font-light">
+                      {slide.body}
+                    </p>
+                  </>
+                )}
+
+                {/* SLIDE 2 — Nel nome c'è tutto */}
+                {slide.id === 2 && (
+                  <>
+                    <p className="text-[11px] sm:text-xs tracking-[0.4em] uppercase text-[#e8d5a3] mb-6 font-light">
+                      {slide.eyebrow}
+                    </p>
+                    <h2 className="font-serif text-white text-4xl sm:text-5xl md:text-6xl leading-tight mb-10">
+                      {slide.title[0]}{" "}
+                      <em className="text-[#e8a87c] font-serif italic">{slide.title[1]}</em>
+                    </h2>
+                    <div className="space-y-5 text-base sm:text-lg md:text-xl leading-[1.8] text-[#f0ebe0] font-light max-w-2xl mx-auto">
+                      {slide.paragraphs.map((para, i) => (
+                        <p key={i}>
+                          <span className="font-serif italic text-[#e8a87c]">{para.intro}</span>
+                          {para.text}
+                        </p>
+                      ))}
+                    </div>
+                  </>
+                )}
+
+                {/* SLIDE 3 — Per mio fratello Gianluca */}
+                {slide.id === 3 && (
+                  <>
+                    <p className="text-[11px] sm:text-xs tracking-[0.4em] uppercase text-[#c9a87a] mb-6 font-light">
+                      {slide.eyebrow}
+                    </p>
+                    <p className="text-sm sm:text-base text-[#e0dcc8] leading-relaxed font-light italic mb-10 max-w-xl mx-auto">
+                      {slide.intro}
+                    </p>
+                    <h2 className="font-serif italic text-3xl sm:text-4xl md:text-5xl text-white mb-3 leading-tight">
+                      {slide.title[0]}
+                    </h2>
+                    <p className="font-serif text-2xl sm:text-3xl md:text-4xl text-[#a8c4e8] mb-2 font-light">
+                      {slide.nameHighlight}
+                    </p>
+                    <p className="font-serif italic text-base sm:text-lg text-[#c9a87a] mb-10 font-light">
+                      {slide.subtitle}
+                    </p>
+                    <p className="text-base sm:text-lg text-[#e0dcc8] font-light max-w-md mx-auto">
+                      {slide.body}
+                    </p>
+                  </>
+                )}
+
+                {/* SLIDE 4 — Ritratto Gianluca */}
+                {slide.id === 4 && (
+                  <>
+                    <p className="text-[11px] sm:text-xs tracking-[0.4em] uppercase text-[#c9a87a] mb-8 font-light">
+                      {slide.eyebrow}
+                    </p>
+                    <div className="space-y-6 text-base sm:text-lg leading-[1.85] text-[#f0ebe0] font-light max-w-2xl mx-auto">
+                      <p>
+                        Il suo nome <em className="font-serif italic text-[#c9a87a] not-italic" style={{ fontStyle: "italic" }}>Gianluca Corvo</em>, per tutti noi semplicemente <em className="font-serif italic text-[#e8a87c]">BLOB</em> — <em className="text-[#a8c4e8]">Binary Large Object</em>. Un soprannome che porta dentro l'informatica, l'informazione, la materia digitale di cui sempre più siamo fatti tutti.
+                      </p>
+                      <p>
+                        Credo che lui continui a vivere in un'altra forma: nell'esistenza dell'informazione, nella rete sottile che attraversa il mondo, nella <em className="font-serif italic text-[#c9a87a]">polvere di stelle</em> di cui siamo composti — e a cui un giorno ritorniamo, come la più lucente nel buio.
+                      </p>
+                    </div>
+                  </>
+                )}
+
+                {/* SLIDE 5 — Invito Memorie */}
+                {slide.id === 5 && (
+                  <>
+                    <p className="text-[11px] sm:text-xs tracking-[0.4em] uppercase text-[#c9a87a] mb-8 font-light">
+                      {slide.eyebrow}
+                    </p>
+                    <p className="text-base sm:text-lg md:text-xl leading-[1.85] text-[#f0ebe0] font-light max-w-2xl mx-auto mb-12">
+                      Costruire ViverAI è il mio modo di tenerlo vicino. Di dire al mondo che l'intelligenza artificiale non deve separarci dalla natura, ma può aiutarci a <em className="font-serif italic text-[#c9a87a]">ricongiungerci</em> con essa — come ci si ricongiunge a chi si è amato.
+                    </p>
+                    <div className="border-t border-[#c9a87a]/30 pt-8 max-w-xl mx-auto">
+                      <p className="text-sm sm:text-base text-[#e0dcc8] font-light italic leading-relaxed mb-6">
+                        {slide.inviteText[0]}
+                        <br />
+                        {slide.inviteText[1]}
+                      </p>
+                      <Link
+                        href={slide.ctaHref}
+                        className="inline-flex items-center gap-3 px-8 py-4 border border-[#c9a87a]/60 text-[#e8d5a3] text-sm tracking-[0.15em] uppercase hover:bg-[#c9a87a]/15 hover:border-[#e8a87c] hover:text-[#e8a87c] transition-all duration-500 rounded-sm group"
+                      >
+                        <span className="text-[#e8a87c] group-hover:scale-110 transition-transform duration-500">✦</span>
+                        <span>{slide.ctaText}</span>
+                        <span className="text-[#e8a87c] group-hover:scale-110 transition-transform duration-500">✦</span>
+                      </Link>
+                      <p className="mt-4 text-xs text-[#c9a87a]/70 font-light tracking-wider">
+                        {slide.ctaSubtitle}
+                      </p>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
           </div>
+        ))}
+
+        {/* ============ CONTROLLI CAROSELLO ============ */}
+
+        {/* Frecce avanti/indietro */}
+        <button
+          onClick={prev}
+          aria-label="Slide precedente"
+          className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-sm text-white/70 hover:bg-black/40 hover:text-white transition-all duration-300 border border-white/10"
+        >
+          <span className="text-xl">‹</span>
+        </button>
+        <button
+          onClick={next}
+          aria-label="Slide successiva"
+          className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-sm text-white/70 hover:bg-black/40 hover:text-white transition-all duration-300 border border-white/10"
+        >
+          <span className="text-xl">›</span>
+        </button>
+
+        {/* Indicatori (puntini) + progress */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex items-center gap-3">
+          {slides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i)}
+              aria-label={`Vai alla slide ${i + 1}`}
+              className="group relative h-2 flex items-center"
+            >
+              <div
+                className={`transition-all duration-500 rounded-full ${
+                  i === current
+                    ? "w-12 bg-[#e8a87c]"
+                    : "w-2 bg-white/40 group-hover:bg-white/70"
+                } h-2`}
+              />
+            </button>
+          ))}
         </div>
-      </section>
 
-      {/* ============ SEZIONE 5 — FIRMA ============ */}
-      <section className="py-24 sm:py-32 px-6 bg-[#faf7f1] border-t border-[#d4c9a8]/40">
-        <div className="max-w-2xl mx-auto text-center">
-          <p className="text-[10px] tracking-[0.4em] uppercase text-[#7a8a6a] mb-6 font-medium">
-            Con cura
-          </p>
-
-          <p className="text-base sm:text-lg leading-relaxed text-[#3a4a3a] mb-10 font-light">
-            Questo progetto è stato fondato e curato da
-          </p>
-
-          <p className="font-serif italic text-4xl sm:text-5xl text-[#2a3a2a] mb-4">
-            Luana Corvo
-          </p>
-
-          <p className="text-sm sm:text-base text-[#5a6b5a] mb-16 font-light leading-relaxed max-w-md mx-auto">
-            con amore per la natura, per la famiglia, per il mondo — e per
-            quella stella più lucente nel buio che mi guida.
-          </p>
-
-          <div className="text-2xl text-[#c87a3f] mb-10 motion-safe:animate-[twinkle_3s_ease-in-out_infinite]">
-            ✦
-          </div>
-
-          <p className="font-serif italic text-xl sm:text-2xl text-[#3a4a3a] leading-relaxed mb-16">
-            Se ami il verde,
-            <br />
-            sei già parte di ViverAI.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/blog"
-              className="inline-block px-8 py-3 border border-[#5a6b3f] text-[#5a6b3f] text-sm tracking-wider uppercase hover:bg-[#5a6b3f] hover:text-white transition-colors duration-500"
-            >
-              Esplora il blog
-            </Link>
-            <Link
-              href="/memorie"
-              className="inline-block px-8 py-3 border border-[#c87a3f] text-[#c87a3f] text-sm tracking-wider uppercase hover:bg-[#c87a3f] hover:text-white transition-colors duration-500"
-            >
-              In memoria di Gianluca
-            </Link>
-          </div>
+        {/* Contatore slide */}
+        <div className="absolute top-6 right-6 z-30 text-[10px] tracking-[0.3em] text-white/60 font-light">
+          {String(current + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
         </div>
       </section>
 
       {/* ============ Animazioni CSS ============ */}
       <style>{`
         @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(30px); }
+          from { opacity: 0; transform: translateY(20px); }
           to { opacity: 1; transform: translateY(0); }
         }
         @keyframes slowZoom {
-          from { transform: scale(1.05); }
-          to { transform: scale(1.15); }
+          from { transform: scale(1.0); }
+          to { transform: scale(1.08); }
         }
         @keyframes twinkle {
           0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.5; transform: scale(1.2); }
+          50% { opacity: 0.4; transform: scale(1.3); }
         }
-        @keyframes heroFadeOne {
-          0%, 35% { opacity: 1; }
-          50%, 85% { opacity: 0; }
-          100% { opacity: 1; }
-        }
-        @keyframes heroFadeTwo {
-          0%, 35% { opacity: 0; }
-          50%, 85% { opacity: 1; }
-          100% { opacity: 0; }
+        @keyframes bigTwinkle {
+          0%, 100% { opacity: 1; transform: scale(1); filter: brightness(1); }
+          50% { opacity: 0.7; transform: scale(1.2); filter: brightness(1.5); }
         }
       `}</style>
     </main>
