@@ -42,7 +42,7 @@ export default function Header() {
           <Link href="/calendario" className="px-2.5 py-[7px] text-[12.5px] text-ink-med rounded hover:text-oliva hover:bg-oliva-10">Calendario</Link>
           <Link href="/community" className="px-2.5 py-[7px] text-[12.5px] text-ink-med rounded hover:text-oliva hover:bg-oliva-10">Community</Link>
           <Link href="/verdescuola" className="px-2.5 py-[7px] text-[12.5px] text-ink-med rounded hover:text-oliva hover:bg-oliva-10">VerdeScuola</Link>
-          <Link href="/memorie" className="px-2.5 py-[7px] text-[12.5px] text-ink-med rounded hover:text-oliva hover:bg-oliva-10">Memorie</Link>
+          <Link href="/chi-siamo" className="px-2.5 py-[7px] text-[12.5px] font-medium text-stone-700 hover:text-emerald-700 transition-colors">Chi siamo</Link>
           <Link href="/contatti" className="px-2.5 py-[7px] text-[12.5px] text-ink-med rounded hover:text-oliva hover:bg-oliva-10">Contatti</Link>
         </nav>
         <div className="flex items-center gap-2 flex-shrink-0 ml-auto">
