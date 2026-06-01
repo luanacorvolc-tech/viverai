@@ -126,20 +126,6 @@ const SLIDES = [
 ];
 
 /* ────────────────────────────────────────────────────────────────────────
- * MENU HEADER — Le voci del menu principale
- * (per usarle anche dentro al carosello quando serve)
- * ──────────────────────────────────────────────────────────────────────── */
-
-const NAV_LINKS = [
-  { label: "Blog", href: "/blog" },
-  { label: "Calendario", href: "/calendario" },
-  { label: "Community", href: "/community" },
-  { label: "VerdeScuola", href: "/verdescuola" },
-  { label: "Chi siamo", href: "/chi-siamo", active: true },
-  { label: "Contatti", href: "/contatti" },
-];
-
-/* ────────────────────────────────────────────────────────────────────────
  * COMPONENTE PRINCIPALE
  * ──────────────────────────────────────────────────────────────────────── */
 
@@ -193,42 +179,15 @@ export default function ChiSiamoPage() {
 
   return (
     <main className="bg-[#faf7f1] text-[#2a3a2a]">
-      {/* ═══════════════════════════════════════════════════════════════
-          HEADER — Menu di navigazione del sito
-          ═══════════════════════════════════════════════════════════════ */}
-
-      <header className="sticky top-0 z-50 bg-[#faf7f1]/95 backdrop-blur-md border-b border-[#d4c9a8]/40">
-        <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="font-serif italic text-2xl text-[#2a3a2a]">
-              ViverAI
-            </span>
-          </Link>
-          <ul className="hidden md:flex items-center gap-1">
-            {NAV_LINKS.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className={`px-2.5 py-[7px] text-[12.5px] font-medium transition-colors ${
-                    link.active
-                      ? "text-emerald-700"
-                      : "text-stone-700 hover:text-emerald-700"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </header>
+      {/* L'Header e il Footer del sito sono caricati automaticamente
+          dal layout.js globale. Qui non li ripetiamo. */}
 
       {/* ═══════════════════════════════════════════════════════════════
           CAROSELLO — Le 8 slide del manifesto
           ═══════════════════════════════════════════════════════════════ */}
 
       <section
-        className="relative w-full h-[calc(100vh-80px)] min-h-[640px] overflow-hidden bg-[#0a1830]"
+        className="relative w-full h-[calc(100vh-180px)] min-h-[600px] overflow-hidden bg-[#0a1830]"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
         aria-label="Manifesto ViverAI — Carosello"

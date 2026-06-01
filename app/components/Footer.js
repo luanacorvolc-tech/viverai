@@ -1,81 +1,133 @@
-'use client';
-
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function Footer() {
   return (
-    <>
-      <section className="bg-ink py-12 px-8 border-t border-white/10">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="text-white/80 text-base font-light leading-relaxed">
-            ❤️ In memoria di <strong style={{ color: '#d4c48a' }}>Gianluca — BLOB</strong> ❤️
-          </p>
-          <p className="text-white/50 text-sm mt-2 font-light">
-            Chi vuole lasciargli una dedica può scrivere{' '}
-            <Link href="/memorie" className="text-terra-light font-semibold underline hover:text-white transition-colors">QUI</Link>
-          </p>
-        </div>
-      </section>
+    <footer className="relative bg-gradient-to-b from-[#1a2d22] to-[#0d1a14] text-[#f0ebe0] overflow-hidden">
+      {/* Bordo decorativo superiore */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#c9a87a]/40 to-transparent" />
 
-      <footer className="bg-cream pt-16 pb-8 px-8 border-t border-oliva-15">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
-            <div>
-              <Link href="/" className="flex items-center gap-[9px] mb-4">
-                <div className="flex gap-[2px] items-end">
-                  <span className="inline-block bg-oliva-med" style={{width:'14px',height:'18px',borderRadius:'50% 0 50% 0',transform:'rotate(-15deg)'}}></span>
-                  <span className="inline-block bg-oliva" style={{width:'11px',height:'14px',borderRadius:'50% 0 50% 0',transform:'rotate(5deg)'}}></span>
-                  <span className="inline-block bg-terra" style={{width:'9px',height:'11px',borderRadius:'50% 0 50% 0',transform:'rotate(20deg)'}}></span>
-                </div>
-                <div>
-                  <div className="font-serif text-[22px] font-semibold leading-none">
-                    <span className="text-oliva">Viver</span><span className="text-terra">AI</span>
-                  </div>
-                  <div className="text-[9px] text-ink-light tracking-[0.07em] uppercase mt-[1px]">Piattaforma educativa del verde</div>
-                </div>
-              </Link>
-              <p className="text-ink-med text-sm leading-relaxed">La piattaforma italiana per chi ama il verde, il giardino, la natura e l'arte di vivere bene.</p>
-              <div className="flex gap-3 mt-5">
-                <a href="#" className="w-9 h-9 rounded-full bg-oliva text-white flex items-center justify-center text-xs hover:bg-terra transition-colors">f</a>
-                <a href="#" className="w-9 h-9 rounded-full bg-oliva text-white flex items-center justify-center text-xs hover:bg-terra transition-colors">📷</a>
-                <a href="#" className="w-9 h-9 rounded-full bg-oliva text-white flex items-center justify-center text-xs hover:bg-terra transition-colors">▶</a>
-                <a href="#" className="w-9 h-9 rounded-full bg-oliva text-white flex items-center justify-center text-xs hover:bg-terra transition-colors">in</a>
-              </div>
-            </div>
-            <div>
-              <h4 className="font-serif text-base font-semibold text-oliva mb-4 uppercase tracking-wider text-sm">Esplora</h4>
-              <ul className="space-y-2.5">
-                <li><Link href="/blog" className="text-ink-med text-sm hover:text-terra transition-colors">Blog & Rivista</Link></li>
-                <li><Link href="/calendario" className="text-ink-med text-sm hover:text-terra transition-colors">Calendario piante</Link></li>
-                <li><Link href="/community" className="text-ink-med text-sm hover:text-terra transition-colors">Community</Link></li>
-                <li><Link href="/verdescuola" className="text-ink-med text-sm hover:text-terra transition-colors">VerdeScuola</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-serif text-base font-semibold text-oliva mb-4 uppercase tracking-wider text-sm">Community</h4>
-              <ul className="space-y-2.5">
-                <li><Link href="/community" className="text-ink-med text-sm hover:text-terra transition-colors">Iscriviti</Link></li>
-                <li><Link href="/memorie" className="text-ink-med text-sm hover:text-terra transition-colors">In memoria di Gianluca</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-serif text-base font-semibold text-oliva mb-4 uppercase tracking-wider text-sm">Contatti</h4>
-              <ul className="space-y-2.5">
-                <li><Link href="/contatti" className="text-ink-med text-sm hover:text-terra transition-colors">Contattaci</Link></li>
-                <li><Link href="/contatti" className="text-ink-med text-sm hover:text-terra transition-colors">Chi siamo</Link></li>
-              </ul>
-            </div>
+      {/* Stelle decorative */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-[15%] left-[10%] text-[5px] text-[#e8d5a3] animate-[twinkleFooter_5s_ease-in-out_infinite] opacity-50">✦</div>
+        <div className="absolute top-[25%] right-[15%] text-[6px] text-[#a8c4e8] animate-[twinkleFooter_7s_ease-in-out_infinite_2s] opacity-60">✦</div>
+        <div className="absolute top-[60%] left-[25%] text-[4px] text-white animate-[twinkleFooter_6s_ease-in-out_infinite_1s] opacity-40">✦</div>
+        <div className="absolute bottom-[30%] right-[30%] text-[5px] text-[#e8d5a3] animate-[twinkleFooter_8s_ease-in-out_infinite_3s] opacity-50">✦</div>
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-6 sm:px-8 py-16 sm:py-20">
+        {/* ============ Marchio + Citazione ============ */}
+        <div className="text-center mb-14">
+          <h2 className="font-serif italic text-3xl sm:text-4xl text-[#f5f0e3] mb-3">
+            ViverAI
+          </h2>
+          <p className="text-xs sm:text-sm text-[#c9a87a] tracking-[0.25em] uppercase font-light mb-6">
+            piattaforma educativa del verde
+          </p>
+          <div className="flex items-center justify-center gap-3 my-6">
+            <div className="w-12 h-px bg-[#c9a87a]/40" />
+            <span className="text-[#e8a87c] animate-[twinkleFooter_3s_ease-in-out_infinite]">✦</span>
+            <div className="w-12 h-px bg-[#c9a87a]/40" />
           </div>
-          <div className="pt-8 border-t border-oliva-15 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-ink-light text-xs">© 2026 ViverAI · Tutti i diritti riservati</p>
-            <div className="flex gap-6 text-xs">
-              <Link href="/privacy" className="text-ink-light hover:text-terra transition-colors">Privacy</Link>
-              <Link href="/cookie" className="text-ink-light hover:text-terra transition-colors">Cookie</Link>
-              <Link href="/termini" className="text-ink-light hover:text-terra transition-colors">Termini</Link>
-            </div>
+          <p className="font-serif italic text-base sm:text-lg text-[#e0dcc8] max-w-md mx-auto leading-relaxed font-light">
+            Vivere con cura.
+            <br />
+            <span className="text-[#c9a87a]">Per Gianluca.</span>
+          </p>
+        </div>
+
+        {/* ============ Colonne link ============ */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 sm:gap-12 mb-14 max-w-5xl mx-auto">
+          {/* Colonna 1 — Esplora */}
+          <div>
+            <h3 className="text-[10px] tracking-[0.3em] uppercase text-[#c9a87a] mb-5 font-medium">
+              Esplora
+            </h3>
+            <ul className="space-y-3 text-sm font-light">
+              <li><Link href="/blog" className="text-[#f0ebe0] hover:text-[#e8a87c] transition-colors duration-300">Blog & Rivista</Link></li>
+              <li><Link href="/calendario" className="text-[#f0ebe0] hover:text-[#e8a87c] transition-colors duration-300">Calendario del verde</Link></li>
+              <li><Link href="/verdescuola" className="text-[#f0ebe0] hover:text-[#e8a87c] transition-colors duration-300">VerdeScuola</Link></li>
+            </ul>
+          </div>
+
+          {/* Colonna 2 — Community */}
+          <div>
+            <h3 className="text-[10px] tracking-[0.3em] uppercase text-[#c9a87a] mb-5 font-medium">
+              Community
+            </h3>
+            <ul className="space-y-3 text-sm font-light">
+              <li><Link href="/community" className="text-[#f0ebe0] hover:text-[#e8a87c] transition-colors duration-300">La community</Link></li>
+              <li><Link href="/chi-siamo" className="text-[#f0ebe0] hover:text-[#e8a87c] transition-colors duration-300">Chi siamo</Link></li>
+            </ul>
+          </div>
+
+          {/* Colonna 3 — In memoria */}
+          <div>
+            <h3 className="text-[10px] tracking-[0.3em] uppercase text-[#c9a87a] mb-5 font-medium">
+              In memoria
+            </h3>
+            <ul className="space-y-3 text-sm font-light">
+              <li>
+                <Link href="/chi-siamo" className="text-[#f0ebe0] hover:text-[#a8c4e8] transition-colors duration-300 inline-flex items-center gap-2 group">
+                  <span className="text-[#a8c4e8] text-xs group-hover:scale-110 transition-transform">✦</span>
+                  Gianluca Corvo
+                </Link>
+              </li>
+              <li className="text-xs text-[#c9a87a]/70 italic pl-5">il nostro BLOB</li>
+              <li><Link href="/chi-siamo" className="text-[#f0ebe0] hover:text-[#e8a87c] transition-colors duration-300">Lascia una dedica</Link></li>
+            </ul>
+          </div>
+
+          {/* Colonna 4 — Contatti */}
+          <div>
+            <h3 className="text-[10px] tracking-[0.3em] uppercase text-[#c9a87a] mb-5 font-medium">
+              Resta in contatto
+            </h3>
+            <ul className="space-y-3 text-sm font-light">
+              <li><Link href="/contatti" className="text-[#f0ebe0] hover:text-[#e8a87c] transition-colors duration-300">Contatti</Link></li>
+              <li><Link href="/cookie" className="text-[#f0ebe0] hover:text-[#e8a87c] transition-colors duration-300">Cookie</Link></li>
+              <li><Link href="/privacy" className="text-[#f0ebe0] hover:text-[#e8a87c] transition-colors duration-300">Privacy</Link></li>
+              <li><Link href="/termini" className="text-[#f0ebe0] hover:text-[#e8a87c] transition-colors duration-300">Termini</Link></li>
+            </ul>
           </div>
         </div>
-      </footer>
-    </>
+
+        {/* ============ Separatore decorativo ============ */}
+        <div className="flex items-center justify-center gap-4 my-10">
+          <div className="flex-1 max-w-[200px] h-px bg-gradient-to-r from-transparent to-[#c9a87a]/30" />
+          <span className="text-[#e8a87c] text-lg animate-[twinkleFooter_4s_ease-in-out_infinite]">✦</span>
+          <div className="flex-1 max-w-[200px] h-px bg-gradient-to-l from-transparent to-[#c9a87a]/30" />
+        </div>
+
+        {/* ============ Firma famiglia ============ */}
+        <div className="text-center mb-8">
+          <p className="text-xs text-[#c9a87a] tracking-[0.25em] uppercase font-light mb-4">
+            Fatto a mano con amore per il verde
+          </p>
+          <p className="font-serif italic text-base text-[#f0ebe0] leading-relaxed">
+            Famiglia Corvo · Toia
+          </p>
+          <p className="text-xs text-[#c9a87a]/70 italic mt-2">
+            Emidio · Luana · Sofia · Leo · Nello
+          </p>
+        </div>
+
+        {/* ============ Copyright ============ */}
+        <div className="text-center pt-8 border-t border-[#c9a87a]/15">
+          <p className="text-xs text-[#c9a87a]/60 font-light tracking-wider">
+            © {new Date().getFullYear()} ViverAI — Tutti i diritti riservati
+          </p>
+          <p className="text-[10px] text-[#c9a87a]/40 mt-2 italic font-light">
+            Una stella più lucente nel buio ci guida in questa avventura
+          </p>
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes twinkleFooter {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.5; transform: scale(1.2); }
+        }
+      `}</style>
+    </footer>
   );
 }
