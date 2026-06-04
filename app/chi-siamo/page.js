@@ -1,620 +1,639 @@
-'use client'
+'use client';
 
-import { useState, useEffect, useRef } from 'react'
-import Link from 'next/link'
+import { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 
-/* ══════════════════════════════════════════════════════
-   DATI SLIDE — 8 immagini con testi
-   Le immagini vanno in: public/images/chi-siamo/
-══════════════════════════════════════════════════════ */
-const SLIDES = [
-  {
-    img: '/images/chi-siamo/slide-01-mano-fiori.png',
-    label: null,
-    titolo: null,
-    testo: null,
-    cta: null,
-    dur: 5500,
-  },
-  {
-    img: '/images/chi-siamo/slide-02-vivaio.png',
-    label: 'Il nostro manifesto',
-    titolo: 'Vivere con cura.',
-    testo: "ViverAI nasce dall'amore per la natura, per la vita e per chi amiamo.\nUna piattaforma educativa del verde, per tutti coloro che vogliono vivere in modo più consapevole e sostenibile.",
-    cta: null,
-    dur: 9000,
-  },
-  {
-    img: '/images/chi-siamo/slide-03-pineta.png',
-    label: 'Come nasce il nome',
-    titolo: 'VIV-er-AI.\nNati nei vivai.',
-    testo: 'Vivaio: luogo dove le piante crescono prima di essere messe a dimora.\nCome noi — cresciamo, ci nutriamo di sapere, poi fiorire nel mondo.',
-    cta: null,
-    dur: 10000,
-  },
-  {
-    img: '/images/chi-siamo/slide-04-stelle.png',
-    label: "Nel nome c'è tutto",
-    titolo: 'Viver- + AI\n= Amore Infinito.',
-    testo: 'Vivere · Intelligenza Artificiale · Amore Infinito.\nTre anime in una parola sola. Per Gianluca, che le incarnava tutte.',
-    cta: null,
-    dur: 10000,
-  },
-  {
-    img: '/images/chi-siamo/slide-05-gianluca.png',
-    label: '✦ In memoriam',
-    titolo: 'Per mio fratello\nGianluca Corvo.',
-    testo: 'BLOB — Binary Large OBject.\nInformatico, poeta del codice, anima generosa.\nQuesto sito è la sua eredità più viva.',
-    cta: null,
-    stellaBlink: true,
-    dur: 11000,
-  },
-  {
-    img: '/images/chi-siamo/slide-06-ciclamini.png',
-    label: 'Polvere di stelle',
-    titolo: '«Mio fratello è polvere\ndi stelle brillante.»',
-    testo: "Luce vera che attraversa l'universo, eterna e luminosa.\nIo e te, un giorno molto lontano, diventeremo la stessa luce\ne splenderemo tutti insieme nel silenzio infinito del cielo.",
-    cta: null,
-    dur: 13000,
-  },
-  {
-    img: '/images/chi-siamo/slide-07-universo.png',
-    label: 'Ricongiungersi',
-    titolo: 'La pineta di\nCastel Fusano.',
-    testo: 'Dove Gianluca è cresciuto con gli amici "del ponte".\nDove la natura e i ricordi si mescolano tra i ciclamini e i pini.\nUn posto che continua a respirare per lui.',
-    cta: { testo: '✦ Lascia una dedica', href: '#dediche', tipo: 'outline' },
-    dur: 11000,
-  },
-  {
-    img: '/images/chi-siamo/slide-08-famiglia.png',
-    label: 'Famiglia Corvo · Toia',
-    titolo: 'Una stella più lucente\nnel buio ci guida.',
-    testo: 'Emidio · Luana · Sofia · Leonardo · Nello\nInsieme a Gianluca, per sempre.',
-    cta: { testo: 'Esplora il blog →', href: '/blog', tipo: 'solid' },
-    dur: 10000,
-  },
-]
+// ─── HEADER (inline, identico all'app) ───────────────────────────────────────
+function Header() {
+  return (
+    <header className="fixed top-0 left-0 right-0 z-[900] border-b border-oliva-15 shadow-[0_1px_20px_rgba(44,42,36,0.07)]">
+      <div className="bg-oliva px-8 py-[5px] flex items-center justify-between flex-wrap gap-1.5">
+        <div className="flex items-center gap-3.5">
+          <a href="#" className="text-[11px] text-white/60 hover:text-white">🔍 Ricerca AI</a>
+          <span className="text-white/20 text-[10px]">|</span>
+          <a href="#" className="text-[11px] text-white/60 hover:text-white">❤️ Preferiti</a>
+          <span className="text-white/20 text-[10px]">|</span>
+          <a href="#" className="text-[11px] text-white/60 hover:text-white">🛒 Shop Green</a>
+          <span className="text-white/20 text-[10px]">|</span>
+          <a href="#" className="text-[11px] text-white/60 hover:text-white">📍 Mappa Verde</a>
+          <span className="text-white/20 text-[10px]">|</span>
+          <Link href="/calendario" className="text-[11px] text-white/60 hover:text-white">📅 Calendario</Link>
+        </div>
+        <div className="flex gap-1">
+          <span className="text-[10px] px-[9px] py-[3px] rounded-full border border-white/40 text-white bg-white/20">🇮🇹 IT</span>
+          <span className="text-[10px] px-[9px] py-[3px] rounded-full border border-white/20 text-white/60">🇬🇧 EN</span>
+          <span className="text-[10px] px-[9px] py-[3px] rounded-full border border-white/20 text-white/60">🇫🇷 FR</span>
+        </div>
+      </div>
+      <div className="flex items-center h-[58px] px-8 gap-2 bg-cream">
+        <Link href="/" className="flex items-center gap-[9px] flex-shrink-0 mr-2">
+          <div className="flex gap-[2px] items-end">
+            <span className="inline-block bg-oliva-med" style={{width:'14px',height:'18px',borderRadius:'50% 0 50% 0',transform:'rotate(-15deg)'}}></span>
+            <span className="inline-block bg-oliva" style={{width:'11px',height:'14px',borderRadius:'50% 0 50% 0',transform:'rotate(5deg)'}}></span>
+            <span className="inline-block bg-terra" style={{width:'9px',height:'11px',borderRadius:'50% 0 50% 0',transform:'rotate(20deg)'}}></span>
+          </div>
+          <div>
+            <div className="font-serif text-[22px] font-semibold leading-none">
+              <span className="text-oliva">Viver</span><span className="text-terra">AI</span>
+            </div>
+            <div className="text-[9px] text-ink-light tracking-[0.07em] uppercase mt-[1px]">Piattaforma educativa del verde</div>
+          </div>
+        </Link>
+        <nav className="hidden lg:flex items-center gap-[1px] flex-1 ml-4">
+          <Link href="/blog" className="px-2.5 py-[7px] text-[12.5px] text-ink-med rounded hover:text-oliva hover:bg-oliva-10">Blog</Link>
+          <Link href="/calendario" className="px-2.5 py-[7px] text-[12.5px] text-ink-med rounded hover:text-oliva hover:bg-oliva-10">Calendario</Link>
+          <Link href="/community" className="px-2.5 py-[7px] text-[12.5px] text-ink-med rounded hover:text-oliva hover:bg-oliva-10">Community</Link>
+          <Link href="/verdescuola" className="px-2.5 py-[7px] text-[12.5px] text-ink-med rounded hover:text-oliva hover:bg-oliva-10">VerdeScuola</Link>
+          <Link href="/chi-siamo" className="px-2.5 py-[7px] text-[12.5px] font-semibold text-oliva border-b-2 border-oliva">Chi siamo</Link>
+          <Link href="/contatti" className="px-2.5 py-[7px] text-[12.5px] text-ink-med rounded hover:text-oliva hover:bg-oliva-10">Contatti</Link>
+        </nav>
+        <div className="flex items-center gap-2 flex-shrink-0 ml-auto">
+          <button className="border border-oliva-25 text-ink-med text-xs font-medium px-[14px] py-[7px] rounded-full hover:border-oliva hover:text-oliva">Accedi</button>
+          <button className="bg-oliva-med text-white text-xs font-semibold px-[18px] py-[8px] rounded-full hover:bg-oliva">🌿 Iscriviti gratis</button>
+        </div>
+      </div>
+    </header>
+  );
+}
 
-export default function ChiSiamo() {
-  const [cur, setCur] = useState(0)
-  const [visible, setVisible] = useState(false)
-  const [formTipo, setFormTipo] = useState('accademica')
-  const [formNome, setFormNome] = useState('')
-  const [formEmail, setFormEmail] = useState('')
-  const [formTesto, setFormTesto] = useState('')
-  const [previewUrl, setPreviewUrl] = useState(null)
-  const [formSent, setFormSent] = useState(false)
-  const [formLoading, setFormLoading] = useState(false)
-  const fileRef = useRef()
-  const timerRef = useRef()
+// ─── FOOTER (identico all'app) ────────────────────────────────────────────────
+function Footer() {
+  return (
+    <footer className="relative bg-gradient-to-b from-[#1a2d22] to-[#0d1a14] text-[#f0ebe0] overflow-hidden">
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#c9a87a]/40 to-transparent" />
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-[15%] left-[10%] text-[5px] text-[#e8d5a3] opacity-50" style={{animation:'twinkleFooter 5s ease-in-out infinite'}}>✦</div>
+        <div className="absolute top-[25%] right-[15%] text-[6px] text-[#a8c4e8] opacity-60" style={{animation:'twinkleFooter 7s ease-in-out infinite 2s'}}>✦</div>
+        <div className="absolute top-[60%] left-[25%] text-[4px] text-white opacity-40" style={{animation:'twinkleFooter 6s ease-in-out infinite 1s'}}>✦</div>
+        <div className="absolute bottom-[30%] right-[30%] text-[5px] text-[#e8d5a3] opacity-50" style={{animation:'twinkleFooter 8s ease-in-out infinite 3s'}}>✦</div>
+      </div>
+      <div className="relative max-w-7xl mx-auto px-6 sm:px-8 py-16 sm:py-20">
+        <div className="text-center mb-14">
+          <h2 className="font-serif italic text-3xl sm:text-4xl text-[#f5f0e3] mb-3">ViverAI</h2>
+          <p className="text-xs sm:text-sm text-[#c9a87a] tracking-[0.25em] uppercase font-light mb-6">piattaforma educativa del verde</p>
+          <div className="flex items-center justify-center gap-3 my-6">
+            <div className="w-12 h-px bg-[#c9a87a]/40" />
+            <span className="text-[#e8a87c]" style={{animation:'twinkleFooter 3s ease-in-out infinite'}}>✦</span>
+            <div className="w-12 h-px bg-[#c9a87a]/40" />
+          </div>
+          <p className="font-serif italic text-base sm:text-lg text-[#e0dcc8] max-w-md mx-auto leading-relaxed font-light">
+            Vivere con cura.<br /><span className="text-[#c9a87a]">Per Gianluca.</span>
+          </p>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 sm:gap-12 mb-14 max-w-5xl mx-auto">
+          <div>
+            <h3 className="text-[10px] tracking-[0.3em] uppercase text-[#c9a87a] mb-5 font-medium">Esplora</h3>
+            <ul className="space-y-3 text-sm font-light">
+              <li><Link href="/blog" className="text-[#f0ebe0] hover:text-[#e8a87c] transition-colors duration-300">Blog & Rivista</Link></li>
+              <li><Link href="/calendario" className="text-[#f0ebe0] hover:text-[#e8a87c] transition-colors duration-300">Calendario del verde</Link></li>
+              <li><Link href="/verdescuola" className="text-[#f0ebe0] hover:text-[#e8a87c] transition-colors duration-300">VerdeScuola</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-[10px] tracking-[0.3em] uppercase text-[#c9a87a] mb-5 font-medium">Community</h3>
+            <ul className="space-y-3 text-sm font-light">
+              <li><Link href="/community" className="text-[#f0ebe0] hover:text-[#e8a87c] transition-colors duration-300">La community</Link></li>
+              <li><Link href="/chi-siamo" className="text-[#f0ebe0] hover:text-[#e8a87c] transition-colors duration-300">Chi siamo</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-[10px] tracking-[0.3em] uppercase text-[#c9a87a] mb-5 font-medium">In memoria</h3>
+            <ul className="space-y-3 text-sm font-light">
+              <li>
+                <Link href="/chi-siamo" className="text-[#f0ebe0] hover:text-[#a8c4e8] transition-colors duration-300 inline-flex items-center gap-2 group">
+                  <span className="text-[#a8c4e8] text-xs group-hover:scale-110 transition-transform">✦</span>
+                  Gianluca Corvo
+                </Link>
+              </li>
+              <li className="text-xs text-[#c9a87a]/70 italic pl-5">il nostro BLOB</li>
+              <li><Link href="/chi-siamo#dediche" className="text-[#f0ebe0] hover:text-[#e8a87c] transition-colors duration-300">Lascia una dedica</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-[10px] tracking-[0.3em] uppercase text-[#c9a87a] mb-5 font-medium">Resta in contatto</h3>
+            <ul className="space-y-3 text-sm font-light">
+              <li><Link href="/contatti" className="text-[#f0ebe0] hover:text-[#e8a87c] transition-colors duration-300">Contatti</Link></li>
+              <li><Link href="/cookie" className="text-[#f0ebe0] hover:text-[#e8a87c] transition-colors duration-300">Cookie</Link></li>
+              <li><Link href="/privacy" className="text-[#f0ebe0] hover:text-[#e8a87c] transition-colors duration-300">Privacy</Link></li>
+              <li><Link href="/termini" className="text-[#f0ebe0] hover:text-[#e8a87c] transition-colors duration-300">Termini</Link></li>
+            </ul>
+          </div>
+        </div>
+        <div className="flex items-center justify-center gap-4 my-10">
+          <div className="flex-1 max-w-[200px] h-px bg-gradient-to-r from-transparent to-[#c9a87a]/30" />
+          <span className="text-[#e8a87c] text-lg" style={{animation:'twinkleFooter 4s ease-in-out infinite'}}>✦</span>
+          <div className="flex-1 max-w-[200px] h-px bg-gradient-to-l from-transparent to-[#c9a87a]/30" />
+        </div>
+        <div className="text-center mb-8">
+          <p className="text-xs text-[#c9a87a] tracking-[0.25em] uppercase font-light mb-4">Fatto a mano con amore per il verde</p>
+          <p className="font-serif italic text-base text-[#f0ebe0] leading-relaxed">Famiglia Corvo · Toia</p>
+          <p className="text-xs text-[#c9a87a]/70 italic mt-2">Emidio · Luana · Sofia · Leo · Nello</p>
+        </div>
+        <div className="text-center pt-8 border-t border-[#c9a87a]/15">
+          <p className="text-xs text-[#c9a87a]/60 font-light tracking-wider">© {new Date().getFullYear()} ViverAI — Tutti i diritti riservati</p>
+          <p className="text-[10px] text-[#c9a87a]/40 mt-2 italic font-light">Una stella più lucente nel buio ci guida in questa avventura</p>
+        </div>
+      </div>
+      <style>{`@keyframes twinkleFooter{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.2)}}`}</style>
+    </footer>
+  );
+}
 
-  const goTo = (n) => {
-    const idx = ((n % SLIDES.length) + SLIDES.length) % SLIDES.length
-    setVisible(false)
+// ─── SLIDE DATA ───────────────────────────────────────────────────────────────
+const slides = [
+  {
+    tag: 'IL MANIFESTO',
+    title: 'Vivere con cura.',
+    body: 'Conoscere la natura come si conosce un amante.\nViverAI è una piattaforma educativa del verde — un luogo lento, fatto a mano, dove i saperi della terra incontrano gli strumenti del nostro tempo.',
+    bg: '/images/chi-siamo/slide-01-mano-fiori.png',
+    align: 'left',
+  },
+  {
+    tag: 'NEL NOME',
+    title: 'VIV-er-AI',
+    subtitle: 'Nel nome ViverAI si nasconde anche un\'altra parola: vivai.',
+    body: 'Il luogo dove tutto comincia — dove un seme diventa piantina, dove la cura quotidiana fa crescere ciò che ami. ViverAI è dedicato a tutti gli appassionati del verde — dal coltivatore esperto al bambino che pianta il suo primo basilico.\nNessuno escluso.',
+    bg: '/images/chi-siamo/slide-02-vivaio.png',
+    align: 'center',
+  },
+  {
+    tag: 'COSA SIGNIFICA',
+    title: 'Nel nome c\'è tutto',
+    body: 'Viver-, vivere. Restare nel mondo, abitarlo con presenza, prendersi cura di ciò che ci dona benessere.\n-AI, l\'intelligenza artificiale. Non come una forza che ci allontana dalla natura, ma come uno strumento gentile che ci aiuta a comprenderla meglio.',
+    bg: '/images/chi-siamo/slide-03-pineta.png',
+    align: 'center',
+  },
+  {
+    tag: 'UNA DEDICA',
+    title: 'Una promessa',
+    body: 'E poi c\'è una terza lettura, la più intima. ViverAI è anche una promessa: tu vivrai. Un nome che è anche un voto, una dedica, un modo per non lasciare andare.',
+    quote: 'Per mio fratello,\nGianluca Corvo\n— il mio caro BLOB —\nViverAI nasce per onorare mio fratello.',
+    bg: '/images/chi-siamo/slide-04-stelle.png',
+    align: 'center',
+    dark: true,
+  },
+  {
+    tag: 'UNA DEDICA',
+    title: 'Una promessa',
+    body: 'E poi c\'è una terza lettura, la più intima. ViverAI è anche una promessa: tu vivrai. Un nome che è anche un voto, una dedica, un modo per non lasciare andare.',
+    quote: 'Per mio fratello,\nGianluca Corvo\n— il mio caro BLOB —\nViverAI nasce per onorare mio fratello.',
+    bg: '/images/chi-siamo/slide-05-gianluca.png',
+    align: 'center',
+    dark: true,
+  },
+  {
+    tag: 'POLVERE DI STELLE',
+    title: 'Gianluca Corvo — BLOB',
+    body: 'Il suo nome Gianluca Corvo, per tutti noi semplicemente BLOB — Binary Large Object. Un soprannome che porta dentro l\'informatica, l\'informazione, la materia digitale di cui sempre più siamo fatti tutti.\nCredo che lui continui a vivere in un\'altra forma: nell\'esistenza dell\'informazione, nella rete sottile che attraversa il mondo, nella polvere di stelle di cui siamo composti — e a cui un giorno ritorniamo, come la più lucente nel buio.',
+    bg: '/images/chi-siamo/slide-06-ciclamini.png',
+    align: 'center',
+    dark: true,
+  },
+  {
+    tag: 'RICONGIUNGERSI',
+    title: 'Tenerlo vicino',
+    body: 'Costruire ViverAI è il mio modo di tenerlo vicino. Di dire al mondo che l\'intelligenza artificiale non deve separarci dalla natura, ma può aiutarci a ricongiungerci con essa — come ci si ricongiunge a chi si è amato.',
+    bg: '/images/chi-siamo/slide-07-universo.png',
+    align: 'left',
+  },
+  {
+    tag: 'CON CURA',
+    title: '✦',
+    body: 'Questo progetto è stato fondato e curato da\nEmidio Corvo · Luana Corvo · Sofia Toia · Leo Toia · Nello Toia\ncon amore per la natura, per la famiglia, per il mondo — e per quella stella più lucente nel buio che ci guida in questa avventura.',
+    closing: 'Se ami il verde come noi, sei già parte di ViverAI.',
+    bg: '/images/chi-siamo/slide-08-famiglia.png',
+    align: 'center',
+    dark: true,
+  },
+];
+
+// ─── CINEMATIC SLIDER ─────────────────────────────────────────────────────────
+function CinematicSlider() {
+  const [current, setCurrent] = useState(0);
+  const [visible, setVisible] = useState(true);
+  const timerRef = useRef(null);
+
+  const goTo = (idx) => {
+    setVisible(false);
     setTimeout(() => {
-      setCur(idx)
-      setTimeout(() => setVisible(true), 400)
-    }, 600)
-  }
+      setCurrent(idx);
+      setVisible(true);
+    }, 500);
+  };
 
   useEffect(() => {
-    setTimeout(() => setVisible(true), 600)
-  }, [])
+    timerRef.current = setInterval(() => {
+      setVisible(false);
+      setTimeout(() => {
+        setCurrent(prev => {
+          const next = (prev + 1) % slides.length;
+          return next;
+        });
+        setVisible(true);
+      }, 500);
+    }, 6000);
+    return () => clearInterval(timerRef.current);
+  }, []);
 
-  useEffect(() => {
-    clearTimeout(timerRef.current)
-    timerRef.current = setTimeout(() => goTo(cur + 1), SLIDES[cur].dur)
-    return () => clearTimeout(timerRef.current)
-  }, [cur])
-
-  const handleFile = (e) => {
-    const f = e.target.files[0]
-    if (!f) return
-    setPreviewUrl(URL.createObjectURL(f))
-  }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setFormLoading(true)
-    await new Promise(r => setTimeout(r, 1000))
-    setFormLoading(false)
-    setFormSent(true)
-    const sub = formTipo === 'accademica'
-      ? 'Dedica per la laurea in Informatica di Gianluca Corvo (BLOB)'
-      : 'Una dedica affettuosa per Gianluca (BLOB)'
-    window.open(
-      `mailto:luana@corvoinformatica.it?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(formTesto)}`,
-      '_blank'
-    )
-  }
-
-  const s = SLIDES[cur]
+  const s = slides[current];
+  const alignClass = s.align === 'left' ? 'items-start text-left' : 'items-center text-center';
 
   return (
-    <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
-        html{scroll-behavior:smooth}
-        *{box-sizing:border-box;margin:0;padding:0}
-        body{font-family:'Lato',sans-serif;background:#faf9f5;color:#2a2a2a}
-
-        /* ── HERO ── */
-        .hero{
-          position:relative;width:100%;
-          height:calc(100vh - 96px);
-          min-height:520px;max-height:820px;
-          overflow:hidden;background:#050810;
-        }
-        .hbg{
-          position:absolute;inset:0;
-          background-size:cover;background-position:center;
-          transition:opacity 1.4s ease;
-          animation:kb 16s ease-in-out infinite alternate;
-        }
-        @keyframes kb{from{transform:scale(1)}to{transform:scale(1.06)}}
-
-        /* fade sinistra stile home */
-        .hfade{
-          position:absolute;inset:0;
-          background:linear-gradient(105deg,
-            rgba(4,8,16,.88) 0%,
-            rgba(4,8,16,.6) 32%,
-            rgba(4,8,16,.18) 60%,
-            transparent 100%);
-          z-index:1;
-        }
-        /* velo globale che appare piano */
-        .hvelo{
-          position:absolute;inset:0;
-          background:rgba(4,8,16,.3);
-          opacity:0;
-          transition:opacity 2.4s ease .4s;
-          z-index:1;
-        }
-        .hvelo.on{opacity:1}
-
-        /* stelle */
-        .hstars{position:absolute;inset:0;z-index:2;pointer-events:none}
-        .hstar{
-          position:absolute;border-radius:50%;background:white;
-          animation:ps var(--d,3s) ease-in-out infinite;
-          animation-delay:var(--dl,0s);
-        }
-        @keyframes ps{0%,100%{opacity:.25;transform:scale(1)}50%{opacity:.9;transform:scale(1.9)}}
-
-        /* stella lampeggiante Gianluca */
-        .hsblink{
-          position:absolute;top:11%;right:7%;
-          font-size:2.6rem;color:#e8d870;z-index:4;
-          animation:sblink 1.4s ease-in-out infinite;
-        }
-        @keyframes sblink{
-          0%,100%{opacity:1;transform:scale(1)}
-          50%{opacity:.08;transform:scale(.6)}
-        }
-
-        /* contenuto testo */
-        .hbody{
-          position:absolute;left:0;top:0;bottom:0;width:54%;
-          display:flex;flex-direction:column;justify-content:center;
-          padding:0 60px;z-index:3;
-          opacity:0;transform:translateY(24px);
-          transition:opacity 1.1s ease,transform 1.1s ease;
-        }
-        .hbody.on{opacity:1;transform:translateY(0)}
-        .hlabel{
-          display:inline-block;
-          font-size:.68rem;letter-spacing:2.5px;text-transform:uppercase;
-          color:#a8d060;background:rgba(0,0,0,.28);
-          border:1px solid rgba(168,208,96,.3);
-          padding:5px 13px;border-radius:20px;margin-bottom:18px;width:fit-content;
-        }
-        .htitle{
-          font-family:'Playfair Display',serif;
-          font-size:clamp(1.9rem,4.2vw,3.6rem);font-weight:700;
-          color:white;line-height:1.18;
-          text-shadow:0 2px 28px rgba(0,0,0,.55);
-          white-space:pre-line;margin-bottom:16px;
-        }
-        .htext{
-          font-size:clamp(.82rem,1.5vw,1rem);
-          color:rgba(255,255,255,.87);line-height:1.82;font-weight:300;
-          text-shadow:0 1px 8px rgba(0,0,0,.5);
-          white-space:pre-line;margin-bottom:26px;max-width:460px;
-        }
-        .hcta{
-          display:inline-flex;align-items:center;gap:8px;
-          padding:11px 26px;border-radius:28px;
-          font-size:.86rem;font-weight:600;cursor:pointer;
-          width:fit-content;transition:all .25s;
-          font-family:'Lato',sans-serif;text-decoration:none;
-        }
-        .hcta.outline{background:transparent;border:1.5px solid rgba(255,255,255,.62);color:white}
-        .hcta.outline:hover{background:rgba(255,255,255,.14);border-color:white}
-        .hcta.solid{background:#2D5016;border:1.5px solid #2D5016;color:white}
-        .hcta.solid:hover{background:#3d6a1e}
-
-        /* dots */
-        .hdots{
-          position:absolute;bottom:22px;left:50%;transform:translateX(-50%);
-          display:flex;gap:9px;z-index:10;
-        }
-        .hdot{
-          height:7px;width:7px;border-radius:4px;
-          background:rgba(255,255,255,.3);border:none;cursor:pointer;
-          transition:all .35s;padding:0;
-        }
-        .hdot.on{background:white;width:26px}
-        .harrow{
-          position:absolute;top:50%;transform:translateY(-50%);
-          background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
-          color:white;width:42px;height:42px;border-radius:50%;
-          font-size:1.3rem;cursor:pointer;z-index:10;
-          display:flex;align-items:center;justify-content:center;
-          transition:background .2s;
-        }
-        .harrow:hover{background:rgba(255,255,255,.22)}
-        .harrow.l{left:18px}.harrow.r{right:18px}
-        .hcnt{
-          position:absolute;bottom:24px;right:26px;
-          font-size:.7rem;color:rgba(255,255,255,.42);letter-spacing:1px;z-index:10;
-        }
-
-        /* ── SEZIONI ── */
-        .ricordarlo{
-          background:white;text-align:center;
-          padding:34px 24px;border-bottom:1px solid #e8e4d8;
-        }
-        .ricordarlo h2{
-          font-family:'Playfair Display',serif;
-          font-size:clamp(1.6rem,4vw,2.5rem);color:#2D5016;margin-bottom:7px;
-        }
-        .ricordarlo p{font-size:1rem;color:#999;font-weight:300}
-
-        .dediche{background:#f5f3ec;padding:44px 24px;border-top:3px solid #2D5016}
-        .dgrid{
-          display:grid;grid-template-columns:1fr 1fr;gap:26px;
-          max-width:1000px;margin:0 auto;align-items:start;
-        }
-        @media(max-width:680px){.dgrid{grid-template-columns:1fr}}
-        .dcard{
-          background:white;border-radius:14px;padding:26px 22px;
-          box-shadow:0 2px 18px rgba(45,80,22,.07);border:1px solid #ddd9c8;
-        }
-        .dem{font-size:1.8rem;display:block;margin-bottom:8px}
-        .dcard h3{font-family:'Playfair Display',serif;font-size:1.08rem;color:#2D5016;margin-bottom:9px}
-        .dcard p{font-size:.86rem;color:#666;line-height:1.68;margin-bottom:9px}
-        .dlink{
-          display:inline-block;color:#5a8a3a;font-weight:700;
-          font-size:.8rem;border-bottom:1px solid currentColor;margin-bottom:7px;
-          text-decoration:none;
-        }
-        .dlink:hover{color:#2D5016}
-        hr.dd{border:none;border-top:1px solid #e4e0d0;margin:15px 0}
-        .dform{display:flex;flex-direction:column;gap:11px}
-        .fg label{display:block;font-size:.72rem;font-weight:700;color:#444;margin-bottom:4px}
-        .fg input,.fg textarea{
-          width:100%;border:1.5px solid #d0ccbc;border-radius:8px;
-          padding:9px 12px;font-family:'Lato',sans-serif;font-size:.87rem;
-          color:#2a2a2a;background:#faf9f5;outline:none;transition:border-color .2s;
-        }
-        .fg input:focus,.fg textarea:focus{border-color:#5a8a3a}
-        .fg textarea{min-height:96px;resize:vertical}
-        .rrow{display:flex;gap:14px;flex-wrap:wrap}
-        .rl{display:flex;align-items:center;gap:6px;font-size:.82rem;color:#555;cursor:pointer}
-        .rl input{width:auto}
-        .fphoto{
-          border:2px dashed #b8c9a0;border-radius:9px;padding:14px;
-          text-align:center;cursor:pointer;background:#f8faf4;
-          font-size:.76rem;color:#999;transition:border-color .2s,background .2s;
-        }
-        .fphoto:hover{border-color:#5a8a3a;background:#eef7e2}
-        .fphoto .fi{font-size:1.5rem;display:block;margin-bottom:4px}
-        .fprev{width:100%;max-height:140px;object-fit:cover;border-radius:8px;margin-top:8px}
-        .bsend{
-          background:#2D5016;color:white;border:none;border-radius:8px;
-          padding:12px 20px;font-family:'Lato',sans-serif;font-size:.9rem;
-          font-weight:700;cursor:pointer;letter-spacing:.3px;
-          transition:background .2s;width:100%;
-        }
-        .bsend:hover{background:#3d6a1e}
-        .bsend:disabled{opacity:.65;cursor:wait}
-        .fnota{text-align:center;font-size:.68rem;color:#ccc;margin-top:2px}
-        .fok{text-align:center;padding:28px 12px;color:#2D5016}
-        .fok .fbig{font-size:2.4rem;display:block;margin-bottom:10px}
-        .fok h3{font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:7px}
-        .fok p{font-size:.83rem;color:#888}
-
-        .suonome{background:white;padding:44px 24px}
-        .snh{text-align:center;margin-bottom:26px}
-        .snh h2{font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3.5vw,2.1rem);color:#2D5016;margin-bottom:5px}
-        .snh p{font-size:.86rem;color:#bbb;font-style:italic}
-        .ggrid{
-          display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
-          max-width:1080px;margin:0 auto;
-        }
-        @media(max-width:820px){.ggrid{grid-template-columns:1fr 1fr}}
-        @media(max-width:480px){.ggrid{grid-template-columns:1fr}}
-        .gcard{
-          border-radius:13px;padding:20px 17px;border:2.5px solid;
-          transition:transform .2s,box-shadow .2s;
-        }
-        .gcard:hover{transform:translateY(-4px);box-shadow:0 10px 26px rgba(0,0,0,.09)}
-        .ge{font-size:1.75rem;display:block;margin-bottom:9px}
-        .gcard h4{font-family:'Playfair Display',serif;font-size:.94rem;margin-bottom:7px}
-        .gcard p{font-size:.76rem;color:#666;line-height:1.65;margin-bottom:12px}
-        .gdona{
-          display:inline-block;font-weight:700;font-size:.78rem;
-          letter-spacing:.3px;border-bottom:2px solid currentColor;
-          transition:opacity .2s;text-decoration:none;
-        }
-        .gdona:hover{opacity:.68}
-
-        /* ── FOOTER ── */
-        .footer{background:#162818;color:#d4c4a0;padding:62px 48px 30px}
-        .fbrand{text-align:right;max-width:1080px;margin:0 auto 50px}
-        .flogo{
-          font-family:'Playfair Display',serif;font-style:italic;
-          font-size:clamp(2.2rem,5vw,3.8rem);font-weight:400;color:#d4c4a0;
-          letter-spacing:-1px;line-height:1;margin-bottom:9px;
-        }
-        .fpiatt{font-size:.63rem;letter-spacing:4px;text-transform:uppercase;color:#8aaa70;margin-bottom:24px}
-        .fdiv{display:flex;align-items:center;justify-content:flex-end;gap:14px;margin-bottom:20px}
-        .fdline{height:1px;width:76px;background:#8aaa70;opacity:.4}
-        .fdstar{color:#c4a870;font-size:1rem}
-        .fm1{font-family:'Playfair Display',serif;font-style:italic;font-size:1.08rem;color:#d4c4a0;display:block;text-align:right;margin-bottom:4px}
-        .fm2{font-family:'Playfair Display',serif;font-style:italic;font-size:.98rem;color:#c4a870;display:block;text-align:right}
-        .fcols{
-          display:grid;grid-template-columns:repeat(4,1fr);gap:30px;
-          max-width:1080px;margin:0 auto;
-          border-top:1px solid rgba(138,170,112,.18);padding-top:38px;
-        }
-        @media(max-width:820px){.fcols{grid-template-columns:1fr 1fr}}
-        @media(max-width:440px){.fcols{grid-template-columns:1fr}}
-        .fc h5{font-size:.61rem;letter-spacing:2px;text-transform:uppercase;color:#8aaa70;margin-bottom:17px;font-weight:400}
-        .fc ul{list-style:none}
-        .fc ul li{margin-bottom:11px}
-        .fc ul li a{color:#c8bca0;font-size:.85rem;font-weight:300;transition:color .2s;text-decoration:none}
-        .fc ul li a:hover{color:#e8dcc0}
-        .fcblob{font-family:'Playfair Display',serif;font-style:italic;font-size:.78rem;color:#c4a870;display:block;margin-top:-5px;margin-bottom:9px}
-        .fcstar::before{content:'✦ ';color:#c4a870;font-size:.65rem}
-        .fbot{
-          max-width:1080px;margin:34px auto 0;
-          border-top:1px solid rgba(138,170,112,.13);padding-top:18px;
-          display:flex;justify-content:space-between;flex-wrap:wrap;gap:7px;
-        }
-        .fbot p{font-size:.68rem;opacity:.38;color:#d4c4a0}
-        .fheart{color:#c4a870}
-      `}</style>
-
-      {/* ══ HERO ══ */}
-      <section className="hero">
-        {/* Background */}
+    <section className="relative w-full h-[100vh] overflow-hidden">
+      {/* Background con transizione */}
+      {slides.map((sl, i) => (
         <div
-          className="hbg"
-          style={{ backgroundImage: `url('${s.img}')` }}
+          key={i}
+          className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000"
+          style={{
+            backgroundImage: `url(${sl.bg})`,
+            opacity: i === current ? 1 : 0,
+            zIndex: 0,
+          }}
         />
+      ))}
 
-        {/* Fade laterale */}
-        <div className="hfade" />
+      {/* Overlay scuro sfumato */}
+      <div className="absolute inset-0 z-10"
+        style={{background: 'linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.2) 100%)'}}
+      />
+      <div className="absolute inset-0 z-10"
+        style={{background: 'linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%)'}}
+      />
 
-        {/* Velo globale */}
-        <div className={`hvelo${visible ? ' on' : ''}`} />
+      {/* Contenuto con fade */}
+      <div
+        className={`absolute inset-0 z-20 flex flex-col justify-center px-12 sm:px-20 lg:px-32 max-w-4xl ${s.align === 'center' ? 'mx-auto w-full' : ''}`}
+        style={{
+          opacity: visible ? 1 : 0,
+          transition: 'opacity 0.6s ease',
+        }}
+      >
+        <div className={`flex flex-col ${alignClass} gap-4`}>
+          {/* Tag */}
+          <span
+            className="inline-block text-[11px] font-medium tracking-[0.35em] uppercase px-3 py-1 rounded-full mb-2"
+            style={{
+              background: 'rgba(201,168,122,0.25)',
+              border: '1px solid rgba(201,168,122,0.5)',
+              color: '#e8d5a3',
+              backdropFilter: 'blur(4px)',
+              textShadow: '0 1px 8px rgba(0,0,0,0.8)',
+            }}
+          >
+            {s.tag}
+          </span>
 
-        {/* Stelle decorative */}
-        <div className="hstars">
-          {[
-            [2,9,14,3.2,.4],[3,20,78,2.7,1.1],[2,62,22,4,.2],
-            [3,72,85,3.6,2],[2,36,92,2.4,.8],[2,16,55,3.9,1.5],
-            [3,82,44,2.9,.1],[2,50,7,4.3,2.2],
-          ].map(([sz,t,l,d,dl],i) => (
-            <span key={i} className="hstar" style={{
-              width:`${sz}px`,height:`${sz}px`,
-              top:`${t}%`,left:`${l}%`,
-              '--d':`${d}s`,'--dl':`${dl}s`,
-            }} />
-          ))}
-        </div>
+          {/* Titolo */}
+          <h1
+            className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight"
+            style={{textShadow: '0 2px 20px rgba(0,0,0,0.9), 0 0 40px rgba(0,0,0,0.7)'}}
+          >
+            {s.title}
+          </h1>
 
-        {/* Stella lampeggiante slide Gianluca */}
-        {s.stellaBlink && <span className="hsblink">✦</span>}
+          {/* Sottotitolo opzionale */}
+          {s.subtitle && (
+            <p
+              className="font-serif italic text-xl sm:text-2xl text-[#e8d5a3] leading-relaxed max-w-2xl"
+              style={{textShadow: '0 1px 12px rgba(0,0,0,0.9)'}}
+            >
+              {s.subtitle}
+            </p>
+          )}
 
-        {/* Testo slide */}
-        <div className={`hbody${visible ? ' on' : ''}`}>
-          {s.label && <span className="hlabel">{s.label}</span>}
-          {s.titolo && <h1 className="htitle">{s.titolo}</h1>}
-          {s.testo && <p className="htext">{s.testo}</p>}
-          {s.cta && (
-            <a href={s.cta.href} className={`hcta ${s.cta.tipo}`}>{s.cta.testo}</a>
+          {/* Body */}
+          <p
+            className="text-base sm:text-lg text-white/90 leading-relaxed max-w-2xl whitespace-pre-line"
+            style={{textShadow: '0 1px 10px rgba(0,0,0,0.9)'}}
+          >
+            {s.body}
+          </p>
+
+          {/* Quote */}
+          {s.quote && (
+            <blockquote
+              className="font-serif italic text-lg sm:text-xl text-[#c9a87a] border-l-2 border-[#c9a87a]/60 pl-5 mt-2 whitespace-pre-line"
+              style={{textShadow: '0 1px 12px rgba(0,0,0,0.95)'}}
+            >
+              {s.quote}
+            </blockquote>
+          )}
+
+          {/* Closing */}
+          {s.closing && (
+            <p
+              className="text-lg sm:text-xl font-medium text-[#e8d5a3] mt-4"
+              style={{textShadow: '0 1px 12px rgba(0,0,0,0.9)'}}
+            >
+              {s.closing}
+            </p>
           )}
         </div>
+      </div>
 
-        {/* Frecce */}
-        <button className="harrow l" onClick={() => { clearTimeout(timerRef.current); goTo(cur - 1) }}>‹</button>
-        <button className="harrow r" onClick={() => { clearTimeout(timerRef.current); goTo(cur + 1) }}>›</button>
+      {/* Dots */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-2">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => goTo(i)}
+            className="transition-all duration-300 rounded-full"
+            style={{
+              width: i === current ? '28px' : '8px',
+              height: '8px',
+              background: i === current ? '#c9a87a' : 'rgba(255,255,255,0.4)',
+            }}
+          />
+        ))}
+      </div>
 
-        {/* Dots */}
-        <div className="hdots">
-          {SLIDES.map((_, i) => (
-            <button
-              key={i}
-              className={`hdot${i === cur ? ' on' : ''}`}
-              onClick={() => { clearTimeout(timerRef.current); goTo(i) }}
-              aria-label={`Slide ${i + 1}`}
-            />
-          ))}
+      {/* Frecce */}
+      <button
+        onClick={() => goTo((current - 1 + slides.length) % slides.length)}
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all"
+      >
+        ‹
+      </button>
+      <button
+        onClick={() => goTo((current + 1) % slides.length)}
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all"
+      >
+        ›
+      </button>
+    </section>
+  );
+}
+
+// ─── SEZIONE DEDICHE ──────────────────────────────────────────────────────────
+function SezioneDediche() {
+  const [tipoForm, setTipoForm] = useState('laurea');
+  const [nome, setNome] = useState('');
+  const [email, setEmail] = useState('');
+  const [ricordo, setRicordo] = useState('');
+  const [inviato, setInviato] = useState(false);
+
+  const handleInvia = () => {
+    if (!nome || !email || !ricordo) return;
+    const soggetto = tipoForm === 'laurea'
+      ? 'Dedica per la laurea in Informatica di Gianluca Corvo (BLOB)'
+      : 'Una dedica affettuosa per Gianluca (BLOB)';
+    const corpo = `Nome: ${nome}\n\n${ricordo}`;
+    window.location.href = `mailto:luana@corvoinformatica.it?subject=${encodeURIComponent(soggetto)}&body=${encodeURIComponent(corpo)}`;
+    setInviato(true);
+  };
+
+  return (
+    <section id="dediche" className="bg-[#f7f4ee] py-20 px-6">
+      <div className="max-w-6xl mx-auto">
+        {/* Titolo sezione */}
+        <div className="text-center mb-14">
+          <span className="inline-block text-[11px] tracking-[0.3em] uppercase text-[#5a7a45] font-medium mb-4">In memoria di Gianluca</span>
+          <h2 className="font-serif text-3xl sm:text-4xl text-[#2c3e1f] mb-4">Una dedica può diventare un riconoscimento</h2>
+          <p className="text-[#5c6b50] max-w-2xl mx-auto leading-relaxed">
+            ViverAI raccoglie ricordi di Gianluca per chiedere all'università la <strong>laurea in Informatica post-mortem</strong> in suo onore. Se hai conosciuto BLOB nel suo lavoro — il suo modo di scrivere codice, di risolvere problemi, di insegnare informatica con dedizione — la tua testimonianza è preziosa.
+          </p>
         </div>
 
-        {/* Contatore */}
-        <span className="hcnt">{cur + 1} / {SLIDES.length}</span>
-      </section>
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
+          {/* ── Colonna sinistra: testo ── */}
+          <div className="space-y-8">
+            {/* Box laurea */}
+            <div className="bg-white rounded-2xl p-7 border border-[#c9a87a]/25 shadow-sm">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="text-2xl">🎓</span>
+                <h3 className="font-serif text-xl text-[#2c3e1f]">Dedica per la laurea</h3>
+              </div>
+              <p className="text-sm text-[#5c6b50] leading-relaxed mb-5">
+                Hai lavorato con lui? L'hai visto insegnare, programmare, risolvere con dedizione? La tua testimonianza professionale può far la differenza.
+              </p>
+              <a
+                href="mailto:luana@corvoinformatica.it?subject=Dedica%20per%20la%20laurea%20in%20Informatica%20di%20Gianluca%20Corvo%20(BLOB)"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-[#3d6b35] hover:text-[#2c5228] transition-colors"
+              >
+                <span className="text-[#c9a87a]">✦</span>
+                Lascia una dedica per la laurea
+                <span className="text-[#c9a87a]">✦</span>
+              </a>
+            </div>
 
-      {/* ══ PER RICORDARLO ══ */}
-      <section className="ricordarlo" id="dediche">
-        <h2>Per ricordarlo</h2>
-        <p>Lascia un pensiero per Gianluca</p>
-      </section>
-
-      {/* ══ FORM DEDICHE ══ */}
-      <section className="dediche">
-        <div className="dgrid">
-
-          {/* Testo + link */}
-          <div className="dcard">
-            <span className="dem">🎓</span>
-            <h3>Una dedica può diventare un riconoscimento</h3>
-            <p>ViverAI raccoglie ricordi di Gianluca per chiedere all&apos;università la <strong>laurea in Informatica post-mortem</strong> in suo onore.</p>
-            <p>Se hai conosciuto BLOB nel suo lavoro — il suo modo di scrivere codice, di risolvere problemi, di insegnare informatica con dedizione — la tua testimonianza è preziosa.</p>
-            <a className="dlink" href="mailto:luana@corvoinformatica.it?subject=Dedica%20per%20la%20laurea%20in%20Informatica%20di%20Gianluca%20Corvo%20(BLOB)">✦ Lascia una dedica per la laurea ✦</a>
-            <hr className="dd" />
-            <p>Forse non l&apos;hai conosciuto come informatico, ma come amico, vicino, compagno di scuola, di gioco, di vita. Raccontaci di lui — un sorriso, un gesto, una giornata insieme, lascia una foto per mantenere vivo il suo ricordo.</p>
-            <a className="dlink" href="mailto:luana@corvoinformatica.it?subject=Una%20dedica%20affettuosa%20per%20Gianluca%20(BLOB)">✦ Lascia una dedica affettuosa ✦</a>
+            {/* Box affettuosa */}
+            <div className="bg-white rounded-2xl p-7 border border-[#c9a87a]/25 shadow-sm">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="text-2xl">🌸</span>
+                <h3 className="font-serif text-xl text-[#2c3e1f]">Dedica affettuosa</h3>
+              </div>
+              <p className="text-sm text-[#5c6b50] leading-relaxed mb-5">
+                Forse non l'hai conosciuto come informatico, ma come amico, vicino, compagno di scuola, di gioco, di vita. Raccontaci di lui — un sorriso, un gesto, una giornata insieme, lascia una foto per mantenere vivo il suo ricordo.
+              </p>
+              <a
+                href="mailto:luana@corvoinformatica.it?subject=Una%20dedica%20affettuosa%20per%20Gianluca%20(BLOB)"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-[#3d6b35] hover:text-[#2c5228] transition-colors"
+              >
+                <span className="text-[#c9a87a]">✦</span>
+                Lascia una dedica affettuosa
+                <span className="text-[#c9a87a]">✦</span>
+              </a>
+            </div>
           </div>
 
-          {/* Form */}
-          <div className="dcard">
-            {formSent ? (
-              <div className="fok">
-                <span className="fbig">✦</span>
-                <h3>Grazie, la tua dedica è arrivata</h3>
-                <p>Dopo l&apos;approvazione comparirà nella galleria dei ricordi di Gianluca.</p>
+          {/* ── Colonna destra: form ── */}
+          <div className="bg-white rounded-2xl p-7 border border-[#ddd8cc] shadow-sm">
+            {inviato ? (
+              <div className="text-center py-10">
+                <div className="text-4xl mb-4">✦</div>
+                <h3 className="font-serif text-xl text-[#2c3e1f] mb-2">Grazie di cuore</h3>
+                <p className="text-sm text-[#5c6b50]">Il tuo ricordo è prezioso per noi.</p>
               </div>
             ) : (
-              <form className="dform" onSubmit={handleSubmit}>
-                <div className="fg">
-                  <label>Il tuo nome *</label>
-                  <input required value={formNome} onChange={e => setFormNome(e.target.value)} placeholder="Come ti chiami?" />
+              <div className="space-y-5">
+                {/* Nome */}
+                <div>
+                  <label className="block text-sm font-semibold text-[#2c3e1f] mb-2">Il tuo nome *</label>
+                  <input
+                    type="text"
+                    placeholder="Come ti chiami?"
+                    value={nome}
+                    onChange={e => setNome(e.target.value)}
+                    className="w-full border border-[#d8d2c4] rounded-xl px-4 py-3 text-sm text-[#2c3e1f] placeholder-[#b0a890] outline-none focus:border-[#5a7a45] transition-colors bg-[#faf9f6]"
+                  />
                 </div>
-                <div className="fg">
-                  <label>La tua email *</label>
-                  <input type="email" required value={formEmail} onChange={e => setFormEmail(e.target.value)} placeholder="Per eventuali comunicazioni" />
+
+                {/* Email */}
+                <div>
+                  <label className="block text-sm font-semibold text-[#2c3e1f] mb-2">La tua email *</label>
+                  <input
+                    type="email"
+                    placeholder="Per eventuali comunicazioni"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    className="w-full border border-[#d8d2c4] rounded-xl px-4 py-3 text-sm text-[#2c3e1f] placeholder-[#b0a890] outline-none focus:border-[#5a7a45] transition-colors bg-[#faf9f6]"
+                  />
                 </div>
-                <div className="fg">
-                  <label>Tipo di dedica</label>
-                  <div className="rrow">
-                    <label className="rl">
-                      <input type="radio" name="tipo" value="accademica" checked={formTipo === 'accademica'} onChange={() => setFormTipo('accademica')} />
+
+                {/* Tipo dedica */}
+                <div>
+                  <label className="block text-sm font-semibold text-[#2c3e1f] mb-3">Tipo di dedica</label>
+                  <div className="flex gap-6">
+                    <label className="flex items-center gap-2 cursor-pointer text-sm text-[#2c3e1f]">
+                      <input
+                        type="radio"
+                        name="tipo"
+                        value="laurea"
+                        checked={tipoForm === 'laurea'}
+                        onChange={() => setTipoForm('laurea')}
+                        className="accent-[#3d6b35]"
+                      />
                       🎓 Per la laurea
                     </label>
-                    <label className="rl">
-                      <input type="radio" name="tipo" value="affettuosa" checked={formTipo === 'affettuosa'} onChange={() => setFormTipo('affettuosa')} />
+                    <label className="flex items-center gap-2 cursor-pointer text-sm text-[#2c3e1f]">
+                      <input
+                        type="radio"
+                        name="tipo"
+                        value="affettuosa"
+                        checked={tipoForm === 'affettuosa'}
+                        onChange={() => setTipoForm('affettuosa')}
+                        className="accent-[#3d6b35]"
+                      />
                       🌸 Affettuosa
                     </label>
                   </div>
                 </div>
-                <div className="fg">
-                  <label>Il tuo ricordo *</label>
-                  <textarea required value={formTesto} onChange={e => setFormTesto(e.target.value)} placeholder="Racconta un momento, un pensiero, un ricordo di Gianluca…" />
+
+                {/* Ricordo */}
+                <div>
+                  <label className="block text-sm font-semibold text-[#2c3e1f] mb-2">Il tuo ricordo *</label>
+                  <textarea
+                    rows={5}
+                    placeholder="Racconta un momento, un pensiero, un ricordo di Gianluca..."
+                    value={ricordo}
+                    onChange={e => setRicordo(e.target.value)}
+                    className="w-full border border-[#d8d2c4] rounded-xl px-4 py-3 text-sm text-[#2c3e1f] placeholder-[#b0a890] outline-none focus:border-[#5a7a45] transition-colors bg-[#faf9f6] resize-y"
+                  />
                 </div>
-                <div className="fg">
-                  <label>Foto (opzionale)</label>
-                  <div className="fphoto" onClick={() => fileRef.current.click()}>
-                    {previewUrl
-                      ? <img src={previewUrl} className="fprev" alt="anteprima" />
-                      : <><span className="fi">📷</span>Clicca per aggiungere una foto</>
-                    }
+
+                {/* Foto */}
+                <div>
+                  <label className="block text-sm font-semibold text-[#2c3e1f] mb-2">Foto (opzionale)</label>
+                  <div
+                    className="border-2 border-dashed border-[#c9c3b0] rounded-xl px-4 py-6 text-center cursor-pointer hover:border-[#5a7a45] transition-colors bg-[#faf9f6]"
+                    onClick={() => document.getElementById('foto-upload').click()}
+                  >
+                    <div className="text-2xl mb-2">📷</div>
+                    <p className="text-xs text-[#8a8272]">Clicca per aggiungere una foto — si ridimensiona automaticamente</p>
+                    <input id="foto-upload" type="file" accept="image/*" className="hidden" />
                   </div>
-                  <input ref={fileRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={handleFile} />
                 </div>
-                <button type="submit" className="bsend" disabled={formLoading}>
-                  {formLoading ? 'Invio in corso…' : '✦ Invia la tua dedica ✦'}
+
+                {/* Bottone */}
+                <button
+                  onClick={handleInvia}
+                  className="w-full bg-[#2c5228] hover:bg-[#1f3d1c] text-white font-semibold text-sm py-4 rounded-xl transition-colors"
+                >
+                  ✦ Invia la tua dedica ✦
                 </button>
-                <p className="fnota">Ogni dedica viene approvata prima di apparire nella galleria.</p>
-              </form>
+
+                <p className="text-center text-xs text-[#8a8272]">Ogni dedica viene approvata prima di apparire nella galleria.</p>
+              </div>
             )}
           </div>
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      {/* ══ IN SUO NOME ══ */}
-      <section className="suonome">
-        <div className="snh">
-          <h2>In suo nome</h2>
-          <p>Dei piccoli gesti per il mondo</p>
+// ─── DONAZIONI ────────────────────────────────────────────────────────────────
+const donazioni = [
+  {
+    emoji: '🐾',
+    titolo: 'Per gli animali',
+    testo: 'In memoria di Nanetta, la gatta che lui chiamava la sua bambina, e di tutti i felini che cercano una mano gentile.',
+    border: '#3d6b35',
+    hover: '#2c5228',
+    link: 'https://www.enpa.it',
+  },
+  {
+    emoji: '🌲',
+    titolo: 'Per le piante',
+    testo: 'Per la pineta di Castel Fusano — dove BLOB è cresciuto con gli amici "del ponte" — e per ogni albero che il mondo non vuole perdere.',
+    border: '#4a8040',
+    hover: '#3d6b35',
+    link: 'https://www.wwf.it',
+  },
+  {
+    emoji: '💚',
+    titolo: 'Per chi soffre d\'ansia',
+    testo: 'Gianluca conviveva con gli attacchi di panico. Un suo carissimo amico, "Devil" — a cui va un grazie di cuore — è stato per lui un Angelo che lo ha aiutato a guarire da bambino.',
+    border: '#5a9448',
+    hover: '#4a8040',
+    link: 'https://www.progettoansia.com',
+  },
+  {
+    emoji: '🌿',
+    titolo: 'A ViverAI',
+    testo: 'Perché questa piattaforma resti gratuita per tutti — educazione del verde accessibile a chiunque voglia vivere con più cura.',
+    border: '#c9a87a',
+    hover: '#b8935a',
+    link: 'mailto:luana@corvoinformatica.it?subject=Donazione%20a%20ViverAI',
+    terra: true,
+  },
+];
+
+function SezioneDonazioniInSuoNome() {
+  return (
+    <section className="bg-white py-20 px-6">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="font-serif text-3xl sm:text-4xl text-[#2c3e1f] mb-3">In suo nome</h2>
+          <p className="font-serif italic text-[#7a8c6a]">Dei piccoli gesti per il mondo</p>
         </div>
-        <div className="ggrid">
-          {[
-            { em:'🐾', titolo:'Per gli animali', color:'#2D5016', bg:'#2D501608',
-              testo:'In memoria di Nanetta, la gatta che lui chiamava la sua bambina, e di tutti i felini che cercano una mano gentile.',
-              href:'mailto:luana@corvoinformatica.it?subject=Donazione%20animali%20in%20memoria%20di%20BLOB' },
-            { em:'🌲', titolo:'Per le piante', color:'#3d6a1e', bg:'#5a8a3a08',
-              testo:'Per la pineta di Castel Fusano — dove BLOB è cresciuto con gli amici "del ponte" — e per ogni albero che il mondo non vuole perdere.',
-              href:'mailto:luana@corvoinformatica.it?subject=Donazione%20piante%20in%20memoria%20di%20BLOB' },
-            { em:'💚', titolo:"Per chi soffre d'ansia", color:'#4a7a10', bg:'#7CAA2D08',
-              testo:'Gianluca conviveva con gli attacchi di panico. Un suo carissimo amico, "Devil" — a cui va un grazie di cuore — è stato per lui un Angelo che lo ha aiutato a guarire da bambino.',
-              href:'mailto:luana@corvoinformatica.it?subject=Donazione%20ansia%20in%20memoria%20di%20BLOB' },
-            { em:'🌿', titolo:'A ViverAI', color:'#a05a20', bg:'#c47c3a08',
-              testo:'Perché questa piattaforma resti gratuita per tutti — educazione del verde accessibile a chiunque voglia vivere con più cura.',
-              href:'mailto:luana@corvoinformatica.it?subject=Donazione%20ViverAI' },
-          ].map((g, i) => (
-            <div key={i} className="gcard" style={{ borderColor: g.color, background: g.bg }}>
-              <span className="ge">{g.em}</span>
-              <h4 style={{ color: g.color }}>{g.titolo}</h4>
-              <p>{g.testo}</p>
-              <a className="gdona" style={{ color: g.color }} href={g.href}>Dona →</a>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {donazioni.map((d, i) => (
+            <div
+              key={i}
+              className="rounded-2xl p-6 flex flex-col gap-3 transition-all duration-300 hover:-translate-y-1"
+              style={{
+                background: d.terra ? '#fdf8f2' : '#f2f6f0',
+                border: `2px solid ${d.border}`,
+              }}
+            >
+              <div className="text-3xl">{d.emoji}</div>
+              <h3
+                className="font-semibold text-base"
+                style={{color: d.border}}
+              >
+                {d.titolo}
+              </h3>
+              <p className="text-sm text-[#4a5540] leading-relaxed flex-1">{d.testo}</p>
+              <a
+                href={d.link}
+                className="text-sm font-bold underline underline-offset-4 transition-colors mt-2 inline-block"
+                style={{color: d.border}}
+                target={d.link.startsWith('http') ? '_blank' : undefined}
+                rel={d.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+              >
+                Dona →
+              </a>
             </div>
           ))}
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      {/* ══ FOOTER ══ */}
-      <footer className="footer">
-        <div className="fbrand">
-          <div className="flogo">ViverAI</div>
-          <div className="fpiatt">Piattaforma educativa del verde</div>
-          <div className="fdiv">
-            <div className="fdline" />
-            <span className="fdstar">✦</span>
-            <div className="fdline" />
-          </div>
-          <span className="fm1">Vivere con cura.</span>
-          <span className="fm2">Per Gianluca.</span>
-        </div>
-
-        <div className="fcols">
-          <div className="fc">
-            <h5>Esplora</h5>
-            <ul>
-              <li><a href="/blog">Blog &amp; Rivista</a></li>
-              <li><a href="#">Chatbot AI</a></li>
-              <li><a href="/calendario">Calendario del verde</a></li>
-              <li><a href="/verdescuola">VerdeScuola</a></li>
-            </ul>
-          </div>
-          <div className="fc">
-            <h5>Community</h5>
-            <ul>
-              <li><a href="/community">La community</a></li>
-              <li><a href="/chi-siamo">Chi siamo</a></li>
-            </ul>
-          </div>
-          <div className="fc">
-            <h5>In memoria</h5>
-            <ul>
-              <li>
-                <a className="fcstar" href="/chi-siamo">Gianluca Corvo</a>
-                <span className="fcblob">il nostro BLOB</span>
-              </li>
-              <li><a href="#dediche">Lascia una dedica</a></li>
-              <li><a href="#">La galleria</a></li>
-            </ul>
-          </div>
-          <div className="fc">
-            <h5>Resta in contatto</h5>
-            <ul>
-              <li><a href="/contatti">Contatti</a></li>
-              <li><a href="/cookie">Cookie</a></li>
-              <li><a href="/privacy">Privacy</a></li>
-              <li><a href="/termini">Termini</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="fbot">
-          <p>© {new Date().getFullYear()} ViverAI — Luana Corvo. Tutti i diritti riservati.</p>
-          <p>Fatto con <span className="fheart">♥</span> per Gianluca Corvo (BLOB)</p>
-        </div>
-      </footer>
+// ─── PAGE ─────────────────────────────────────────────────────────────────────
+export default function ChiSiamo() {
+  return (
+    <>
+      <Header />
+      <main className="pt-[90px]">
+        <CinematicSlider />
+        <SezioneDediche />
+        <SezioneDonazioniInSuoNome />
+      </main>
     </>
-  )
+  );
 }
