@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
+
 
 export default function Contatti() {
   const [form, setForm] = useState({
@@ -205,7 +205,7 @@ export default function Contatti() {
         </section>
 
       </main>
-      <Footer />
+
     </>
   );
 }

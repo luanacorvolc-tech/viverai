@@ -1,5 +1,5 @@
 import Header from '../components/Header';
-import Footer from '../components/Footer';
+
 
 export default function Community() {
   return (
@@ -20,7 +20,7 @@ export default function Community() {
           </div>
         </div>
       </main>
-      <Footer />
+
     </>
   );
 }

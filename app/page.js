@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Header from './components/Header';
-import Footer from './components/Footer';
+
 
 const slides = [
   {
@@ -198,7 +198,7 @@ export default function Home() {
         </div>
       </section>
 
-      <Footer />
+
 
       <style jsx global>{`
         @keyframes slideUp {

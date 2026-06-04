@@ -1,5 +1,5 @@
 import Header from '../components/Header';
-import Footer from '../components/Footer';
+
 
 export default function Termini() {
   return (
@@ -14,7 +14,7 @@ export default function Termini() {
           <p className="text-ink-light italic">Versione preliminare. Documento completo in arrivo.</p>
         </div>
       </main>
-      <Footer />
+
     </>
   );
 }

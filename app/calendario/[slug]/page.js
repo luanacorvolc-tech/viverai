@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Header from '../../components/Header';
-import Footer from '../../components/Footer';
+
 import { getPianta, piante, mesi, mesiCompleti } from '../../data/piante';
 
 export function generateStaticParams() {
@@ -224,7 +224,7 @@ export default async function PiantaDettaglio({ params }) {
         )}
 
       </main>
-      <Footer />
+
     </>
   );
 }

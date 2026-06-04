@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
+
 import { piante, categorie, mesi, mesiCompleti } from '../data/piante';
 
 function CalendarioPianta({ semina, raccolta, meseAttivo }) {
@@ -139,7 +139,7 @@ export default function Calendario() {
         </section>
 
       </main>
-      <Footer />
+
       <style jsx>{`@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }`}</style>
     </>
   );
