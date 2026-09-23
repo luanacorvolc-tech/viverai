@@ -1,10 +1,8 @@
-import Header from '../components/Header';
 
 
 export default function Contatti() {
   return (
     <>
-      <Header />
       <main className="min-h-screen bg-cream py-24 px-8">
         <div className="max-w-4xl mx-auto text-center">
           <span className="inline-block bg-oliva-10 text-oliva text-[11px] font-medium tracking-[0.14em] uppercase px-3 py-1 rounded-full mb-4">Contatti</span>

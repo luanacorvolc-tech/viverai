@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Header from '../components/Header';
 
 
 export default function Contatti() {
@@ -27,7 +26,6 @@ export default function Contatti() {
 
   return (
     <>
-      <Header />
       <main className="min-h-screen bg-cream">
 
         <div className="bg-beige px-8 py-10 border-b border-oliva-15">

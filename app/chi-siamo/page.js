@@ -628,7 +628,6 @@ function SezioneDonazioniInSuoNome() {
 export default function ChiSiamo() {
   return (
     <>
-      <Header />
       <main className="pt-[90px]">
         <CinematicSlider />
         <SezioneDediche />

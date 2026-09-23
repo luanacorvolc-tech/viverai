@@ -2,7 +2,6 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
-import Header from '../components/Header';
 
 import { piante, categorie, mesi, mesiCompleti } from '../data/piante';
 
@@ -57,7 +56,6 @@ export default function Calendario() {
 
   return (
     <>
-      <Header />
       <main className="min-h-screen bg-cream">
 
         <section className="bg-beige py-16 px-8 border-b border-oliva-15">

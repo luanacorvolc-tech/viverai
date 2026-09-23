@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Header from './components/Header';
 
 
 const slides = [
@@ -89,7 +88,6 @@ export default function Home() {
 
   return (
     <>
-      <Header />
 
       <section className="relative w-full overflow-hidden" style={{ height: 'calc(100vh - 96px)', minHeight: '560px' }}>
         <div className="absolute inset-0 transition-all duration-1000 ease-in-out" style={{ backgroundImage: `url(${slide.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }} key={currentSlide}>
